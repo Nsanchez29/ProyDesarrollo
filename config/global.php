@@ -3,7 +3,7 @@
 
 define("DB_HOST", "69.46.6.238:3306");
 
-define("DB_NAME", "tcsogt_restaurante");
+define("DB_NAME", "tcsogt_dbrestaurante");
 
 define("DB_USERNAME", "tcsogt_nsanchez"); 
 
