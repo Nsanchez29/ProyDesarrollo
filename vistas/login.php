@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
   <head>
+    <meta charset="utf-8">
     <title>Proyecto Restaurante</title>
     <link
       rel="stylesheet"
@@ -32,13 +34,15 @@
         <h2 class="card-title">Iniciar Sesión</h2>
         <hr>
         <div class="text-left">
-          <form>
+
+          <form action="../modelos/loguear.php" method="POST">
             <div class="form-group">
               <label><strong>Usuario:</strong></label>
               <input
                 placeholder="Ingrese su usuario."
                 type="text"
                 class="form-control"
+                name="user"
               />
             </div>
             <div class="form-group">
@@ -47,10 +51,11 @@
                 placeholder="Ingrese su contraseña."
                 type="password"
                 class="form-control"
+                name="pass"
               />
             </div>
             <hr />
-            <button type="button" class="btn btn-primary btn-block">
+            <button type="submit" class="btn btn-primary btn-block">
               Ingresar
             </button>
           </form>
