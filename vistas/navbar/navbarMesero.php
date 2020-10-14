@@ -21,7 +21,7 @@
           
           <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Menú</button>
           
-          <a href="../modelos/salir.php" style="margin: 2.5px;" type="button" class="btn btn-outline-danger">Salir</a>
+          <a href="../../modelos/salir.php" style="margin: 2.5px;" type="button" class="btn btn-outline-danger">Salir</a>
         </form>
       </div>
     </nav>

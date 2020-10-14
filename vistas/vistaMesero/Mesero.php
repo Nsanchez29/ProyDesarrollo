@@ -1,13 +1,16 @@
 <?php
 
-session_start();
-/*
-$usuario = $_SESSION['usuario'];
+    session_start();
 
-if(!isset($usuario)){
-  header("location: ../vistas/login.php");
-}else{
-*/
+    if(!isset($_SESSION['idRol'])){
+        header('location: ../vistas/login.php');
+    }else{
+        if($_SESSION['idRol'] != 3){
+            header('location: ../vistas/login.php');
+        }
+    }
+
+
 ?>
 
 <!DOCTYPE html>
