@@ -56,7 +56,7 @@
       $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
       while ($fila=mysqli_fetch_array($datos)){
       echo "<p>";
-      echo $fila("id");
+      echo $fila["id"];
       echo "</p>";
       }
     ?>
