@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Proyecto Restaurante</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"

@@ -18,6 +18,8 @@
   <head>
     <meta charset="utf-8">
     <title>Proyecto Restaurante</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -48,18 +50,17 @@
 
     <br><br>
 
-    <div style="margin: auto;" class="col-md-11 card shadow-inset">
-        <div class="card-body col-md-12">
-            <div class="item">
-                <h3>Mesas</h3>
-                <span class="spacer"></span>
-                <button type="button" class="btn btn-primary">Agregar</button>
-            </div>
-            <hr>
-
-        </div>
-    </div>
+    <?php
+      include '../../config/conexion.php';
+      $consulta="select*from ordenes";
+      $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+      while ($fila=mysqli_fetch_array($datos)){
+      echo "<p>";
+      echo $fila("id");
+      echo "</p>";
+      }
+    ?>
+    
 
   </body>
 </html>
-<?php /*}*/ ?>
