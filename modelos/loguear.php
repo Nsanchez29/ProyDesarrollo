@@ -28,7 +28,7 @@ session_start();
 
             case 2:
             	echo '<script> alert("Bienvenido anfitrion");
-				location.href = "../vistas/base.php"; 
+				location.href = "../vistas/vistaAnfitrion/Anfitrion.php"; 
 				</script>';
             break;
 
