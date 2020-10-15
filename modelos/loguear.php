@@ -16,8 +16,9 @@ session_start();
         
         if($row == true){
             $rol = $row[3];
-            
+            $idMesero = $row[0];
             $_SESSION['idRol'] = $rol;
+            $_SESSION['idMesero'] = $idMesero;
             switch($rol){
                 case 1:
                 echo '<script> alert("Bienvenido administrador");
