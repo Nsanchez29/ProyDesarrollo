@@ -46,7 +46,7 @@
   </head>
   <body>
     
-    <?php include("navbar/navbarAdmin.php");?>
+    <?php include("../navbar/navbarAdmin.php");?>
 
     <br><br>
 
