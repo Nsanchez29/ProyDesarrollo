@@ -22,7 +22,7 @@ session_start();
             switch($rol){
                 case 1:
                 echo '<script> alert("Bienvenido administrador");
-				location.href = "../vistas/base.php"; 
+				location.href = "../vistas/vistaAdmin/Admin.php"; 
 				</script>';
             break;
 
