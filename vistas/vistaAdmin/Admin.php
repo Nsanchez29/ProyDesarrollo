@@ -9,7 +9,7 @@
             header('location: ../vistas/login.php');
         }
     }
-
+    
 
 ?>
 
@@ -42,22 +42,27 @@
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
   </head>
   <body>
     
     <?php include("../navbar/navbarAdmin.php");?>
 
-    <br><br>
+    
 
-    <div style="margin: auto;" class="col-md-11 card shadow-inset">
+    <div style="margin: auto; margin-top: 125px; box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;" class="col-md-11 card shadow-inset">
         <div class="card-body col-md-12">
-            <div class="item">
+
+          <div class="jumbotron" style="margin-top: 35px;">
+  <h1 class="display-4 text-center">Bienvenido al Sitio del Administrador</h1>
+  <hr>  
+</div>
+            <!--<div class="item">
                 <h3>Mesas</h3>
                 <span class="spacer"></span>
                 <button type="button" class="btn btn-primary">Agregar</button>
-            </div>
-            <hr>
+            </div> -->
+         
 
         </div>
     </div>

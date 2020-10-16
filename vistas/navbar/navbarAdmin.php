@@ -1,5 +1,5 @@
 <nav style="box-shadow: rgba(0,0,0,0.5) 0px 0px 20px 0px;" class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#"><strong>Restaurante</strong></a>
+      <a class="navbar-brand" href="../vistaAdmin/Admin.php"><strong>Restaurante</strong></a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -14,7 +14,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Mesas</button>
+          <a href="../vistaAdmin/mesas.php" style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Mesas</a>
           <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Usuarios</button>
           
           <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Tipos Comida</button>
