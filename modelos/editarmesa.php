@@ -2,14 +2,23 @@
 require_once "../config/conexion.php";
 
 	
-	$id = $_POST['sillasId'];
-	$sillas = $_POST['sillasUpdate'];
-
-	echo $id;
-	echo $sillas;
+	$id = $_POST['id'];
+	$sillas = $_POST['CantSillas'];
 
 
-	/*$consulta = "SELECT max(numero) as Num from mesas";
+
+	$consulta = "UPDATE mesas set cantidadMaxSillas = $sillas where id = $id ";
 	$q = mysqli_query($conexion, $consulta);
-	*/
+	
+	if ($q) {
+					echo '<script> alert("mesa modificada");
+					location.href = "../vistas/vistaAdmin/mesas.php"; 
+					</script>';
+				}else{
+					echo '<script> alert("error al modificar mesa");
+					location.href = "../vistas/vistaAdmin/mesas.php"; 
+					</script>';
+				}
+	
+
 ?>
