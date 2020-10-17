@@ -91,7 +91,7 @@
           include '../../config/conexion.php';
           $id = $_SESSION["idMesero"];
           $consulta =
-          "SELECT * FROM mesas";
+          "SELECT * FROM mesas where estado != 0";
           $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
           while ($fila=mysqli_fetch_array($datos)){
             
@@ -105,14 +105,14 @@
                     $estado = $fila['estado'];
                     if($estado == 1) {
                       echo "box-accept";
-                    } else if($estado == 0) {
+                    } else if($estado == 2) {
                       echo "box-waiting";
                     };
                     echo " sombra'><span class='material-icons'>";
                     
                     if($estado == 1) {
                       echo "done_outline";
-                    } else if($estado == 0) {
+                    } else if($estado == 2) {
                       echo "block";
                     };
                   
@@ -130,10 +130,12 @@
                   </div>
                   <div class='card-footer'>";
                   $boton = $fila['estado'];
-                  if ($boton==0) {
+                  if ($boton==2) {
                     echo "<button type='button' class='btn btn-primary btn-lg btn-block' disabled>Asignar Mesero</button>";
                   }else if ($boton ==1) {
-                    echo "<button type='button' class='btn btn-primary btn-lg btn-block'>Asignar Mesero</button>";
+                    $mesa = $fila['numero'];
+                    $IdMesa = $fila['id'];
+                    echo "<button id='btnModal' type='button' data-numero='$mesa' data-mesa='$IdMesa' class='btn btn-primary btn-lg btn-block ModalMesero' data-toggle='modal' data-target='#ModalMesero'>Asignar Mesero</button>";
                   };
                   echo "</div>
                 </div>
@@ -142,11 +144,14 @@
             ";
           }
         ?>
-
-            
-        
-
       </div>
     </div>
-  </body>
+
+<?php
+          include 'modalAnfitrion.php';
+?>
+
+<script src="traspaso.js"></script>
+
+</body>
 </html>
