@@ -10,7 +10,7 @@
         }
     }
 
-    include '../../config/conexion.php';
+    require_once "../../config/conexion.php";
 
 ?>
 
@@ -54,34 +54,32 @@
 
     <div style="margin: auto; box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;" class="col-md-11 card shadow-inset">
         <div class="card-body col-md-12">
-            <h2>Mesas</h2>
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#Agregarmesa">Agregar Mesa</button>  
+            <h2>Tipos de Comida</h2>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#Agregartipo">Agregar Tipo de Comida</button>  
             <br>
             <br>
             <table class="table text-center";>
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Numero de Mesa</th>
-                  <th scope="col">Cantidad de Personas</th>
+                  <th scope="col">Tipo de Comida</th>
                   <th scope="col">Editar</th>
                   <th scope="col">Desactivar</th>
                 </tr>
               </thead>
                 <tbody>
                   <?php
-                    $mesas = "select * from mesas where estado = 1";
-                    $Adminmesa = mysqli_query($conexion, $mesas);
+                    $tiposcomida = "SELECT * from tipocomidas where estado = 1";
+                    $Admintipos = mysqli_query($conexion, $tiposcomida);
 
-                    foreach ($Adminmesa as $columna) {
+                    foreach ($Admintipos as $colTipo) {
                       
                   ?>
                   <tr>
-                    <td><?php echo $columna['id']; ?></td>
-                    <td><?php echo $columna['numero']; ?></td>
-                    <td><?php echo $columna['cantidadMaxSillas']; ?></td>
-                    <td><button class="btn btn-warning Editarmesa" data-toggle='modal' data-target='#Editarmesa'><span class="material-icons">create</span></button> </td>
-                    <td><a href="../../modelos/eliminarmesa.php?id=<?php echo $columna['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
+                    <td><?php echo $colTipo['id']; ?></td>
+                    <td><?php echo $colTipo['nombre']; ?></td>
+                    <td><button class="btn btn-warning Editartipo" data-toggle='modal' data-target='#Editartipo'><span class="material-icons">create</span></button> </td>
+                    <td><a href="../../modelos/eliminartipo.php?id=<?php echo $colTipo['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
                   </tr>
                   <?php
                     }
@@ -94,21 +92,21 @@
     <br>
 
 <!--Modal Agregar -->
-  <div class="modal fade" id="Agregarmesa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="Agregartipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar mesa</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Tipo de Comida</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="../../modelos/nuevamesa.php" method="POST">
+      <form action="../../modelos/nuevotipo.php" method="POST">
       <div class="modal-body">
         
         <div class="form-group">
-          <label>Cantidad Maxima de sillas</label>
-          <input type="number" class="form-control" name="sillas" placeholder="Ingrese cantidad de sillas.">
+          <label>Tipo de Comida</label>
+          <input type="text" class="form-control" name="tipoC" placeholder="Ingrese Tipo de Comida.">
         </div>
       </div>
       <div class="modal-footer">
@@ -122,21 +120,21 @@
 
 <!--Modal Editar -->
 
-<div class="modal fade" id="Editarmesa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Editartipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h5 class="modal-title" id="exampleModalLabel">Editar mesa</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Editar Tipo de Comida</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="../../modelos/editarmesa.php" method="POST">
+      <form action="../../modelos/editartipo.php" method="POST">
       <div class="modal-body">
-        <input type="hidden" name="id" id="update_id">
+        <input type="hidden" name="idTipo" id="update_id">
         <div class="form-group">
-          <label>Cantidad Maxima de sillas</label>
-          <input type="number" class="form-control" name="CantSillas" id="sillasUpdate" placeholder="Ingrese cantidad de sillas.">
+          <label>Tipo de Comida</label>
+          <input type="text" class="form-control" name="TipoComida" id="tipoUpdate" placeholder="Ingrese Tipo de Comida.">
         </div>
       </div>
       <div class="modal-footer">
@@ -151,7 +149,7 @@
 
 <script type="text/javascript">
 
- $('.Editarmesa').on('click',function(){
+ $('.Editartipo').on('click',function(){
 
   $tr=$(this).closest('tr');
 
@@ -160,7 +158,7 @@
   });
 
   $('#update_id').val(datos[0]);
-  $('#sillasUpdate').val(datos[2]);
+  $('#tipoUpdate').val(datos[1]);
 
  });
 

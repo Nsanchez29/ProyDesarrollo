@@ -17,11 +17,11 @@
           <a href="../vistaAdmin/mesas.php" style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Mesas</a>
           <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Usuarios</button>
           
-          <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Tipos Comida</button>
+          <a href="../vistaAdmin/tiposcomida.php" style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Tipos Comida</a>
           
-          <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Menú</button>
+          <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Platillos</button>
           
-          <a data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" style="padding:0px;" href="../modelos/salir.php" style="margin: 2.5px;" type="button" class="btn btn-danger"/>
+          <a data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" style="padding:0px;" href="../../modelos/salir.php" style="margin: 2.5px;" type="button" class="btn btn-danger"/>
             <span style="font-size: 20px; margin: 7px 10px 7px 6px;" class="material-icons">exit_to_app</span>
             </a>
         </form>
