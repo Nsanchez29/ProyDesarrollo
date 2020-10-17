@@ -1,5 +1,6 @@
- <!--<?php
-   /* session_start();
+<?php
+ include '../../config/conexion.php';
+    session_start();
     if(!isset($_SESSION['idRol'])){
         header('location: ../vistas/login.php');
     }else{
@@ -8,8 +9,27 @@
         }
     }
 
-*/
-?>-->
+    $idord = $_REQUEST['idOrd'];
+
+
+         
+         $consulta = "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, mes.numero as numeroMesa, mes.cantidadMaxSillas, ord.id as idOrd 
+          from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario 
+          INNER JOIN mesas mes on mes.id = ord.idMesa WHERE ord.id = $idord";
+          $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+          $fila=mysqli_fetch_array($datos);
+
+
+           $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub
+                        from consumoporordenes consord
+                        INNER JOIN consumibles as consu on consord.idConsumible = consu.id
+                        where consord.idOrden = $idord";
+          $data=mysqli_query($conexion,$resultado) or die(mysqli_error($conexion));
+          
+
+
+   
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -89,8 +109,8 @@
   <div class="card-body">
       <div class="item">
         <div class="card-title">
-          <h3><strong>Orden #10</strong></h3>
-          <h5>Mesa No.1</h5>
+          <h3><strong>Orden #<?php echo $fila['numeroOrden'];?></strong></h3>
+          <h5>Mesa No.<?php echo $fila['numeroMesa'];?></h5>
         </div>
         <span class="spacer"></span>
         <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary"><span class="material-icons">add</span></button>
@@ -111,36 +131,22 @@
             </tr>
           </thead>
           <tbody>
+          <?php
+             while ($row=mysqli_fetch_array($data)){
+              echo"
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td class="text-center" >
-                <button type="button" style="color:white;" class="btn btn-warning  btn-sm"><span class="material-icons">create</span></button>
-                <button type="button" class="btn btn-danger btn-sm"><span class="material-icons">delete</span></button>
+              <th scope='row'>1</th>
+              <td>"; echo $row['nombre']; echo "</td>
+              <td>"; echo $row['cant']; echo "</td>
+              <td class='text-center'>
+                <button type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
+                <button type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
               </td>
-              <td class="text-right">@mdo</td>
+              <td class='text-right'>"; echo $row['sub']; echo "</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td class="text-center" >
-                <button type="button" style="color:white;" class="btn btn-warning  btn-sm"><span class="material-icons">create</span></button>
-                <button type="button" class="btn btn-danger btn-sm"><span class="material-icons">delete</span></button>
-              </td>
-              <td class="text-right">@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td class="text-center" >
-                <button type="button" style="color:white;" class="btn btn-warning  btn-sm"><span class="material-icons">create</span></button>
-                <button type="button" class="btn btn-danger btn-sm"><span class="material-icons">delete</span></button>
-              </td>
-              <td class="text-right">@mdo</td>
-            </tr>
+            ";
+          }
+           ?>
           </tbody>
         </table>
       </div>    
@@ -150,7 +156,7 @@
             <div class='col-md-12 item'>
               <span><strong>Total:</strong></span>
               <span class='spacer'></span>
-              <span>Q.40.00</span>
+              <span>Q.<?php echo $fila['totalOrden'];?></span>
               </div>
     <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
   </div>
