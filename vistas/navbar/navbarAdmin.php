@@ -15,7 +15,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <a href="../vistaAdmin/mesas.php" style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Mesas</a>
-          <button style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Usuarios</button>
+          <a href="../vistaAdmin/usuarios.php" style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Usuarios</a>
           
           <a href="../vistaAdmin/tiposcomida.php" style="margin: 2.5px;" type="button" class="btn btn-outline-secondary">Tipos Comida</a>
           

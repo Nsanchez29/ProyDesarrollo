@@ -11,7 +11,7 @@ require_once "../config/conexion.php";
 	$qTipo = mysqli_query($conexion, $EditTipo);
 	
 	if ($qTipo) {
-					echo '<script> alert("Tipo de Comida modificadO");
+					echo '<script> alert("Tipo de Comida modificado");
 					location.href = "../vistas/vistaAdmin/tiposcomida.php"; 
 					</script>';
 				}else{
