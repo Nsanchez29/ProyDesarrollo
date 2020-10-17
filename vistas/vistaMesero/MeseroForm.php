@@ -87,18 +87,64 @@
       <div class="card col-md-10" style=" margin: auto;  box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;">
  
   <div class="card-body">
-    <h5 class="card-title">No. Orden 5 Mesa 2</h5>
-    <hr>
-     <div class='col-md-12 item'>
-            <span>Hamburguesa con papas</span> 
-             <span class='spacer'></span>
-              <span>Q.25.00</span>
-                </div>
-                  <div class='col-md-12 item'>
-               <span>Nachos con queso</span> 
-             <span class='spacer'></span>
-              <span>Q.15.00</span>
-              </div>
+      <div class="item">
+        <div class="card-title">
+          <h3><strong>Orden #10</strong></h3>
+          <h5>Mesa No.1</h5>
+        </div>
+        <span class="spacer"></span>
+        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary"><span class="material-icons">add</span></button>
+        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-success"><span class="material-icons">done_outline</span></button>
+      </div>
+    <hr style="margin-top:0px">
+
+    <div>
+      <div class="col-md-12">  
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Cantidad</th>
+              <th  class="text-center" scope="col">Opciones</th>
+              <th class="text-right" scope="col">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td class="text-center" >
+                <button type="button" style="color:white;" class="btn btn-warning  btn-sm"><span class="material-icons">create</span></button>
+                <button type="button" class="btn btn-danger btn-sm"><span class="material-icons">delete</span></button>
+              </td>
+              <td class="text-right">@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td class="text-center" >
+                <button type="button" style="color:white;" class="btn btn-warning  btn-sm"><span class="material-icons">create</span></button>
+                <button type="button" class="btn btn-danger btn-sm"><span class="material-icons">delete</span></button>
+              </td>
+              <td class="text-right">@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td class="text-center" >
+                <button type="button" style="color:white;" class="btn btn-warning  btn-sm"><span class="material-icons">create</span></button>
+                <button type="button" class="btn btn-danger btn-sm"><span class="material-icons">delete</span></button>
+              </td>
+              <td class="text-right">@mdo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>    
+    </div> 
     
     <hr>
             <div class='col-md-12 item'>

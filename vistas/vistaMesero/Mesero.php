@@ -8,12 +8,13 @@
         }
     }
 
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
   <head>
+
     <meta charset="utf-8">
     <title>Proyecto Restaurante</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -199,5 +200,7 @@
 
       </div>
     </div>
+  
   </body>
+    
 </html>
