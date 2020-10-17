@@ -8,7 +8,7 @@
                 Reportes
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Detalle por Orden.</a>
+                <a class="dropdown-item" href="../reportes/detalleOrdenes.php">Detalle por Orden.</a>
                 <a class="dropdown-item" href="#">Ordenes por Mesero.</a>
               </div>
             </li>
