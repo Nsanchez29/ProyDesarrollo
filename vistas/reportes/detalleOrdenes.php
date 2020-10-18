@@ -103,9 +103,17 @@
                       </tbody>
                       </table>
                      </div>
+                     <div class="col-md-10">
+                      <br>
+                      <span class="spacer"></span>
+                      <a href="detalleOrdenesPDF.php?t=pdf&palabra=<?php echo urlencode($buscar);?>" id="GenerarMysql" class="btn btn-primary mb-2 float-right">Crear PDF
+                        <i class="fas fa-file-pdf"></i>
+                      </a>                      
+                      <br>
+                    </div>
                       <?php
                   }
-                  ?>
+                  ?>              
             </div>
             <hr>
         </div>
