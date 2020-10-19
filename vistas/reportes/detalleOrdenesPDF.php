@@ -10,7 +10,7 @@
         }
     }*/
 
-    include '../../config/conexion.php';
+    //include '../../config/conexion.php';
 
 ?>
 <?php ob_start(); ?>
@@ -46,48 +46,92 @@
     ></script><!--
     <link rel="stylesheet" href="../../css/styles.css" />-->
   </head>
-  <body>
+    <body>
 
-<h1>Reporte de La Orden</h1>
-<p>Listo PUTOS............</p>
-<div class="col-md-12">
-<br>
-<br>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
+    <h1>Reporte de La Orden</h1>
+    <p>Listo PUTOS............</p>
+      <?php
+          include '../../config/conexion.php';
+          if(isset($_GET['palabra'])) 
+            {   
+          ?>
+          <div class="col-md-12">
+          <br>
+          <br>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
                 <th class="text-center" scope="col">Orden</th>
                 <th class="text-center" scope="col">Comida</th>
                 <th class="text-center" scope="col">Cantidad</th>
                 <th class="text-center" scope="col">SubTotal</th>
                 <th class="text-center" scope="col">Total</th>
                 <th class="text-center" scope="col">Fecha</th>
-            </tr>
-        </thead>
-        <tbody> 
-        <?php
-        $buscar = $_GET["palabra"];
-        echo $buscar;
-        $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha
-            from consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible WHERE ord.id like '%$buscar%'";
-        $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-        while ($fila=mysqli_fetch_array($datos)){
-        ?> 
-            <tr>
-                <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
-                <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
-                <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
-                <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
-                <td class="text-center" scope="col"><?=$fila['total']?></td>
-                <td class="text-center" scope="col"><?=$fila['fecha']?></td>
-            </tr> 
-        <?php 
-        }
-            ?>
-        </tbody>
-    </table>
-</div>
-</body>
+              </tr>
+            </thead>
+            <tbody> 
+            <?php
+                $buscar = $_GET["palabra"];
+                $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible WHERE ord.id like '%$buscar%'";
+                $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                while ($fila=mysqli_fetch_array($datos)){
+                ?> 
+                <tr>
+                  <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
+                  <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
+                  <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
+                  <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
+                  <td class="text-center" scope="col"><?=$fila['total']?></td>
+                  <td class="text-center" scope="col"><?=$fila['fecha']?></td>
+                </tr> 
+                <?php 
+                    }
+                    ?>
+            </tbody>
+          </table>
+          </div>
+      <?php
+          }else
+              {                  
+          ?>
+          <div class="col-md-12">
+          <br>
+          <br>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th class="text-center" scope="col">Orden</th>
+                <th class="text-center" scope="col">Comida</th>
+                <th class="text-center" scope="col">Cantidad</th>
+                <th class="text-center" scope="col">SubTotal</th>
+                <th class="text-center" scope="col">Total</th>
+                <th class="text-center" scope="col">Fecha</th>
+              </tr>
+            </thead>
+            <tbody> 
+            <?php
+                $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible";
+                $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                while ($fila=mysqli_fetch_array($datos)){
+                ?> 
+                <tr>
+                  <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
+                  <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
+                  <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
+                  <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
+                  <td class="text-center" scope="col"><?=$fila['total']?></td>
+                  <td class="text-center" scope="col"><?=$fila['fecha']?></td>
+                </tr> 
+                <?php 
+                    }
+                    ?>
+            </tbody>
+          </table>
+          </div>
+      <?php
+          }
+          ?> 
+  </body>
 </html>
 <?php
 require_once '../../lib/dompdf/autoload.inc.php';
