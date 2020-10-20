@@ -170,7 +170,7 @@
               <br>
               <button type='button' style='margin-right: 16px' class='btn btn-primary float-right'"; 
 
-               if ($lineas < 1) {
+               if ($lineas == 0) {
                 echo "disabled";
                 }
 
