@@ -26,8 +26,12 @@
                         where consord.idOrden = $idord";
           $data=mysqli_query($conexion,$resultado) or die(mysqli_error($conexion));
           
+          $numord = "select * from consumoporordenes where idOrden = $idord";
+            $num= mysqli_query($conexion,$numord) or die(mysqli_error($conexion));
 
-
+         
+          $lineas=mysqli_num_rows($num);
+            
    
 ?>
 
@@ -114,7 +118,7 @@
         </div>
         <span class="spacer"></span>
         <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary"><span class="material-icons">add</span></button>
-        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-success"><span class="material-icons">done_outline</span></button>
+        <a href="Mesero.php" style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-success"><span class="material-icons">done_outline</span></a>
       </div>
     <hr style="margin-top:0px">
 
@@ -144,26 +148,41 @@
               </td>
               <td class='text-right'>"; echo $row['sub']; echo "</td>
             </tr>
+
             ";
           }
            ?>
           </tbody>
         </table>
-      </div>    
+
+      </div>
+
     </div> 
-    
+       
     <hr>
+    <?php  
+    echo "
             <div class='col-md-12 item'>
               <span><strong>Total:</strong></span>
               <span class='spacer'></span>
-              <span>Q.<?php echo $fila['totalOrden'];?></span>
+              <span>Q.";echo $fila['totalOrden']; echo"</span>
               </div>
-    <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-  </div>
-</div>
-      
+              <br>
+              <button type='button' style='margin-right: 16px' class='btn btn-primary float-right'"; 
+
+               if ($lineas < 1) {
+                echo "disabled";
+                }
+
+                echo">Pagar</button>  
+          
+            </div>  
+          </div>
+        "; 
+      ?>
 
       </div>
+      
     </div>
   </body>
 </html>
