@@ -10,7 +10,7 @@ $continente=$_POST['continente'];
 	$result=mysqli_query($conexion,$sql);
 
 	$cadena="<label><strong>Tipo Comida:</strong></label> 
-            <select id='lista2' name='lista2' class='form-control'>
+            <select class='form-control' id='lista2' name='lista2'>
             <option value='0'>Selecciona una opcion</option>";
 
 	while ($ver=mysqli_fetch_row($result)) {
@@ -20,8 +20,32 @@ $continente=$_POST['continente'];
     if($cantidad == 0) {
         echo"";
     } else {
-        echo  $cadena."</select>";
+        echo  $cadena."</select>
+        
+        <script type='text/javascript'>
+            $(document).ready(function(){
+                    $('#lista2').change(function(){
+                        mostrar();
+                    });
+                })
+            </script>
+            <script type='text/javascript'>
+            function mostrar(){
+                console.log('ENTRA ACA2');
+                    $.ajax({
+                        type:'POST',
+                        url:'datosConsumo.php',
+                        data:'idConsumible=' + $('#lista2').val(),
+                        success:function(r){
+                            $('#cantidadConsumo').html(r);
+                        }
+                    });
+                }
+            </script>
+
+        ";
     }
 	
 
 ?>
+

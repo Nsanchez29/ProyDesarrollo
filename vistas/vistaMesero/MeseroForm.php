@@ -116,7 +116,7 @@
           <h5>Mesa No.<?php echo $fila['numeroMesa'];?></h5>
         </div>
         <span class="spacer"></span>
-        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary"><span class="material-icons">add</span></button>
+        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><span class="material-icons">add</span></button>
         <a href="Mesero.php" style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-success"><span class="material-icons">done_outline</span></a>
       </div>
     <hr style="margin-top:0px">
@@ -211,6 +211,7 @@
               </div>
 
               <div class="form-group col-md-12" id="select2lista"></div>
+              <div class="form-group col-md-12" id="cantidadConsumo"></div>
               
             </div>
           </div>
@@ -233,6 +234,7 @@
 </script>
 <script type="text/javascript">
 	function recargarLista(){
+    console.log('ENTRA ACA');
 		$.ajax({
 			type:"POST",
 			url:"datos.php",
