@@ -195,30 +195,32 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="col-md-12">
+          <form action="">
+            <div class="modal-body">
+              <div class="col-md-12">
 
-              <div class="form-group col-md-12">
-                <label><strong>Tipo Comida:</strong></label>
-                <select class="form-control"  id="lista1" name="lista1">
-                  <option value="0">Selecciona una opcion</option>
-                  <?php
-                    while ($row2=mysqli_fetch_array($response)){
-                      echo"<option value='";echo $row2['id']; echo"'>";echo $row2['nombre'];echo"</option>";
-                    }
-                  ?>
-                </select>
+                <div class="form-group col-md-12">
+                  <label><strong>Tipo Comida:</strong></label>
+                  <select class="form-control"  id="lista1" name="lista1">
+                    <option value="0">Selecciona una opcion</option>
+                    <?php
+                      while ($row2=mysqli_fetch_array($response)){
+                        echo"<option value='";echo $row2['id']; echo"'>";echo $row2['nombre'];echo"</option>";
+                      }
+                    ?>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-12" id="select2lista"></div>
+                <div class="form-group col-md-12" id="cantidadConsumo"></div>
+                
               </div>
-
-              <div class="form-group col-md-12" id="select2lista"></div>
-              <div class="form-group col-md-12" id="cantidadConsumo"></div>
-              
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+              <button type="button" class="btn btn-primary">Agregar</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
