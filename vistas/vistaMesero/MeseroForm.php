@@ -195,10 +195,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form action="">
+          <form action="../../modelos/insertarconsumo.php" method="POST">
             <div class="modal-body">
               <div class="col-md-12">
-
+                <input type="hidden" name="idOrden" value="<?php echo $idord;?>">
                 <div class="form-group col-md-12">
                   <label><strong>Tipo Comida:</strong></label>
                   <select class="form-control"  id="lista1" name="lista1">
@@ -218,7 +218,7 @@
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-              <button type="button" class="btn btn-primary">Agregar</button>
+              <button type="submit" name="save" class="btn btn-primary">Agregar</button>
             </div>
           </form>
         </div>
