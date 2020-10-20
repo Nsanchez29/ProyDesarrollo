@@ -63,33 +63,104 @@
                     <input type="submit" value="Buscar" name="buscar" class="btn btn-primary mb-2">
                   </form>
                   <?php
-                  include '../../config/conexion.php';
-                  if(isset($_POST["palabra"])) 
+                  include '../../config/conexion.php';                  
+                  if(isset($_POST['buscar']))                  
                   {   
                      ?>
+                     <div class="col-md-12">
+                      <br>
+                      <br>
                      <table class="table">
                       <thead class="thead-dark">
                          <tr>
-                              <td width="100" align="center"><strong>Orden</strong></td>
-                              <td width="100" align="center"><strong>Valor</strong></td>
-                         </tr> 
+                              <th class="text-center" scope="col">Orden</th>
+                              <th class="text-center" scope="col">Comida</th>
+                              <th class="text-center" scope="col">Cantidad</th>
+                              <th class="text-center" scope="col">SubTotal</th>
+                              <th class="text-center" scope="col">Total</th>
+                              <th class="text-center" scope="col">Fecha</th>
+                         </tr>
+                      </thead>
+                      <tbody> 
                          <?php
                          $buscar = $_POST["palabra"];
-                         $consulta = "select * from ordenes WHERE id like '%$buscar%'";
+                         $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha
+                           from consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible WHERE ord.id like '%$buscar%'";
                          $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
                          while ($fila=mysqli_fetch_array($datos)){
                              ?> 
                              <tr>
-                                 <td class="estilo-tabla" align="center"><?=$fila['id']?></td>
-                                 <td class=”estilo-tabla” align="center"><?=$fila['total']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['total']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['fecha']?></td>
                              </tr> 
                              <?php 
                          }
                       ?>
+                      </tbody>
                       </table>
+                     </div>
+                     <div class="col-md-10">
+                      <br>
+                      <span class="spacer"></span>
+                      <a href="detalleOrdenesPDF.php?t=pdf&palabra=<?php echo urlencode($buscar);?>" id="GenerarMysql" class="btn btn-primary mb-2 float-right">Crear PDF
+                        <i class="fas fa-file-pdf"></i>
+                      </a>                      
+                      <br>
+                    </div>
                       <?php
-                  }
+                  }else
+                  {                 
                   ?>
+                  <div class="col-md-12">
+                      <br>
+                      <br>
+                     <table class="table">
+                      <thead class="thead-dark">
+                         <tr>
+                              <th class="text-center" scope="col">Orden</th>
+                              <th class="text-center" scope="col">Comida</th>
+                              <th class="text-center" scope="col">Cantidad</th>
+                              <th class="text-center" scope="col">SubTotal</th>
+                              <th class="text-center" scope="col">Total</th>
+                              <th class="text-center" scope="col">Fecha</th>
+                         </tr>
+                      </thead>
+                      <tbody> 
+                         <?php
+                         $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha
+                           from consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible";
+                         $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                         while ($fila=mysqli_fetch_array($datos)){
+                             ?> 
+                             <tr>
+                                 <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['total']?></td>
+                                 <td class="text-center" scope="col"><?=$fila['fecha']?></td>
+                             </tr> 
+                             <?php 
+                         }
+                      ?>
+                      </tbody>
+                      </table>
+                     </div>
+                     <div class="col-md-10">
+                      <br>
+                      <span class="spacer"></span>
+                      <a href="detalleOrdenesPDF.php?t=pdf" id="GenerarMysql" class="btn btn-primary mb-2 float-right">Crear PDF
+                        <i class="fas fa-file-pdf"></i>
+                      </a>                       
+                      <br>
+                    </div>
+                    <?php
+                    }
+                  ?>              
             </div>
             <hr>
         </div>

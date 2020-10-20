@@ -10,7 +10,7 @@ session_start();
         $password = $_POST['pass'];
 
 
-        $q = "SELECT * from usuarios where nombre = '$username' and password = '$password'";
+        $q = "SELECT * from usuarios where nombre = '$username' and password = '$password' and estado = 1";
 		$consultaUsuario= mysqli_query($conexion,$q);
 		$row = mysqli_fetch_array($consultaUsuario);
         

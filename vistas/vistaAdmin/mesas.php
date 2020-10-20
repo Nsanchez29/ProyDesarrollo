@@ -54,13 +54,12 @@
 
     <div style="margin: auto; box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;" class="col-md-11 card shadow-inset">
         <div class="card-body col-md-12">
-          <div class="jumbotron" style="margin-top: 35px;">
-            <h3 class="display-4 text-center">Mesas</h3>
-            <hr>
-            <button class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#Agregarmesa">Agregar Mesa</button>  
-          </div>
-            <table class="table text-center">
-              <thead>
+            <h2>Mesas</h2>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#Agregarmesa">Agregar Mesa</button>  
+            <br>
+            <br>
+            <table class="table text-center";>
+              <thead class="thead-dark">
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Numero de Mesa</th>
@@ -78,14 +77,11 @@
                       
                   ?>
                   <tr>
-                    <th><?php echo $columna['id']; ?></th>
+                    <td><?php echo $columna['id']; ?></td>
                     <td><?php echo $columna['numero']; ?></td>
                     <td><?php echo $columna['cantidadMaxSillas']; ?></td>
-                    <?php $id= $columna['id'];
-                          $sillas= $columna['cantidadMaxSillas']
-                     ?>
-                    <td><button class="btn btn-warning Editarmesa" id="editMesa" data-id='$id' data-sillas='$sillas' data-toggle='modal' data-target='#Editarmesa'>Modificar</button> </td>
-                    <td><a class="btn btn-danger">Desactivar</a></td>
+                    <td><button class="btn btn-warning Editarmesa" data-toggle='modal' data-target='#Editarmesa'><span class="material-icons">create</span></button> </td>
+                    <td><a href="../../modelos/eliminarmesa.php?id=<?php echo $columna['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
                   </tr>
                   <?php
                     }
@@ -137,10 +133,10 @@
       </div>
       <form action="../../modelos/editarmesa.php" method="POST">
       <div class="modal-body">
-        <input type="text" name="sillasId" id="sillasId">
+        <input type="hidden" name="id" id="update_id">
         <div class="form-group">
           <label>Cantidad Maxima de sillas</label>
-          <input type="number" class="form-control" name="sillasUpdate" id="sillasUpdate" placeholder="Ingrese cantidad de sillas.">
+          <input type="number" class="form-control" name="CantSillas" id="sillasUpdate" placeholder="Ingrese cantidad de sillas.">
         </div>
       </div>
       <div class="modal-footer">
@@ -155,18 +151,16 @@
 
 <script type="text/javascript">
 
- $(document).ready(function(){
+ $('.Editarmesa').on('click',function(){
 
-    $(document).on("click","#editMesa",function() {
+  $tr=$(this).closest('tr');
 
-        var id = $(this).data('id');
-        var sillas = $(this).data('sillas');
+  var datos=$tr.children('td').map(function(){
+    return $(this).text();
+  });
 
-        $('#Editarmesa').modal('show');
-        $('#sillasId').val(id);
-        $('#sillasUpdate').val(sillas);
-
-    });
+  $('#update_id').val(datos[0]);
+  $('#sillasUpdate').val(datos[2]);
 
  });
 
