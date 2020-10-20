@@ -142,7 +142,8 @@
                     <span class='spacer'></span>
                     <span>Q"; echo $fila['totalOrden']; echo "</span>
                   </div>
-                  <a href='MeseroForm.php?idOrd="; echo $fila['ordId']; echo"' class='btn btn-primary btn-block' >Primary link</a>
+                  <br>
+                  <a href='MeseroForm.php?idOrd="; echo $fila['ordId']; echo"' class='btn btn-primary btn-block' >Ver orden</a>
                 </div>
               </div>
             </div>
