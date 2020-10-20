@@ -114,16 +114,16 @@
                   <div class='item'>
                     <div class='";
                     $estado = $fila['estado'];
-                    if($estado == 1) {
+                    if($estado == 2) {
                       echo "box-accept";
-                    } else if($estado == 2) {
+                    } else if($estado == 1) {
                       echo "box-waiting";
                     };
                     echo " sombra'><span class='material-icons'>";
                     
-                    if($estado == 1) {
+                    if($estado == 2) {
                       echo "done_outline";
-                    } else if($estado == 2) {
+                    } else if($estado == 1) {
                       echo "av_timer";
                     };
                   
