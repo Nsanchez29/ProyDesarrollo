@@ -167,7 +167,7 @@
               <span>Q.";echo $fila['totalOrden']; echo"</span>
               </div>
               <br>
-              <button type='button' style='margin-right: 16px' class='btn btn-primary float-right'"; 
+              <button data-toggle='modal' data-target='#exampleModal2' type='button' style='margin-right: 16px' class='btn btn-primary float-right'"; 
 
                if ($lineas == 0) {
                 echo "disabled";
@@ -224,6 +224,28 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal2 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Pagar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
 

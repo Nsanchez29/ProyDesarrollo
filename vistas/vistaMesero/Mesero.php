@@ -92,11 +92,10 @@
           include '../../config/conexion.php';
           $id = $_SESSION["idMesero"];
           $consulta =
-          "select ord.numero as numeroOrden, ord.total as totalOrden, 
-          ord.estado, ord.fecha, mes.numero as numeroMesa, 
-          mes.cantidadMaxSillas, ord.id as ordId 
+          "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, 
+          mes.numero as numeroMesa, mes.cantidadMaxSillas, ord.id as ordId 
           from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario INNER JOIN mesas mes on mes.id = ord.idMesa 
-          WHERE ord.idUsuario = $id and ord.estado = 1 or ord.estado = 2";
+          WHERE ord.idUsuario = $id and ord.estado BETWEEN 1 AND 2";
           $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
           while ($fila=mysqli_fetch_array($datos)){
             // echo 
