@@ -238,20 +238,20 @@
           <div class="modal-body">
             
             <div class="col-md-12">
-              
+            <input type="hidden" name="totalModal" id="totalModal" value="<?php echo  $fila['totalOrden'];?>">
               <div class="form-group col-md-12">
                 <label><strong>NIT:</strong></label>
-                <input type="text" class="form-control">
+                <input id="nit" name="nit" type="text" class="form-control">
               </div>
 
               <div class="form-group col-md-12">
                 <label><strong>Cantidad Pago:</strong></label>
-                <input type="text" class="form-control">
+                <input id="cantidadPago" name="cantidadPago" type="text" class="form-control">
               </div>
 
               <div class="form-group col-md-12">
                 <label><strong>Cantidad Cambio:</strong></label>
-                <input type="text" class="form-control">
+                <input readonly id="cantidadCambio" name="cantidadCambio" value="0" type="text" class="form-control">
               </div>
 
             </div>
@@ -259,7 +259,7 @@
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <button type="button" class="btn btn-primary">Aceptar</button>
+            <button type="button" id="boton" class="btn btn-primary">Aceptar</button>
           </div>
         </div>
       </div>
@@ -272,6 +272,23 @@
 	$(document).ready(function(){
 		$('#lista1').change(function(){
 			recargarLista();
+		});
+	})
+
+  $(document).ready(function(){
+    $('#boton').attr("disabled", true);
+		$('#cantidadPago').change(function(){
+			var total = parseFloat($('#totalModal').val());
+      var pago = parseFloat($('#cantidadPago').val());
+      var cambio = pago - total;
+      console.log('CAMBIOO', cambio);
+      if(pago >= total) {
+        $('#cantidadCambio').val(cambio);
+        $('#boton').attr("disabled", false);
+      } else {
+        $('#cantidadCambio').val(0);
+        $('#boton').attr("disabled", true);
+      }
 		});
 	})
 </script>
