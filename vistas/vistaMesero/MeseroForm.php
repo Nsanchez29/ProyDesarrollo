@@ -236,11 +236,30 @@
             </button>
           </div>
           <div class="modal-body">
-            ...
+            
+            <div class="col-md-12">
+              
+              <div class="form-group col-md-12">
+                <label><strong>NIT:</strong></label>
+                <input type="text" class="form-control">
+              </div>
+
+              <div class="form-group col-md-12">
+                <label><strong>Cantidad Pago:</strong></label>
+                <input type="text" class="form-control">
+              </div>
+
+              <div class="form-group col-md-12">
+                <label><strong>Cantidad Cambio:</strong></label>
+                <input type="text" class="form-control">
+              </div>
+
+            </div>
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary">Aceptar</button>
           </div>
         </div>
       </div>
