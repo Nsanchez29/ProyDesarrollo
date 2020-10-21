@@ -92,9 +92,11 @@
           include '../../config/conexion.php';
           $id = $_SESSION["idMesero"];
           $consulta =
-          "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, mes.numero as numeroMesa, mes.cantidadMaxSillas, ord.id as ordId
-          from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario 
-          INNER JOIN mesas mes on mes.id = ord.idMesa WHERE ord.estado = 1 or ord.estado = 2 and ord.idUsuario = $id";
+          "select ord.numero as numeroOrden, ord.total as totalOrden, 
+          ord.estado, ord.fecha, mes.numero as numeroMesa, 
+          mes.cantidadMaxSillas, ord.id as ordId 
+          from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario INNER JOIN mesas mes on mes.id = ord.idMesa 
+          WHERE ord.idUsuario = $id and ord.estado = 1 or ord.estado = 2";
           $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
           while ($fila=mysqli_fetch_array($datos)){
             // echo 
@@ -114,16 +116,16 @@
                   <div class='item'>
                     <div class='";
                     $estado = $fila['estado'];
-                    if($estado == 1) {
+                    if($estado == 2) {
                       echo "box-accept";
-                    } else if($estado == 2) {
+                    } else if($estado == 1) {
                       echo "box-waiting";
                     };
                     echo " sombra'><span class='material-icons'>";
                     
-                    if($estado == 1) {
+                    if($estado == 2) {
                       echo "done_outline";
-                    } else if($estado == 2) {
+                    } else if($estado == 1) {
                       echo "av_timer";
                     };
                   
@@ -142,7 +144,8 @@
                     <span class='spacer'></span>
                     <span>Q"; echo $fila['totalOrden']; echo "</span>
                   </div>
-                  <a href='MeseroForm.php?idOrd="; echo $fila['ordId']; echo"' class='btn btn-primary btn-block' >Primary link</a>
+                  <br>
+                  <a href='MeseroForm.php?idOrd="; echo $fila['ordId']; echo"' class='btn btn-primary btn-block' >Ver orden</a>
                 </div>
               </div>
             </div>
