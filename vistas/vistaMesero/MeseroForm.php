@@ -13,11 +13,12 @@
 
 
          
-    $consulta = "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, mes.numero as numeroMesa, mes.cantidadMaxSillas, ord.id as idOrd 
+    $consulta = "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, mes.numero as numeroMesa, mes.cantidadMaxSillas,mes.id as idMes, ord.id as idOrd 
      from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario 
      INNER JOIN mesas mes on mes.id = ord.idMesa WHERE ord.id = $idord";
     $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
     $fila=mysqli_fetch_array($datos);
+
     
     $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub
                    from consumoporordenes consord
@@ -238,6 +239,7 @@
           <form action="../../modelos/insertarPago.php" method="POST">
           <div class="modal-body">
              <input type="hidden" name="idOr" value="<?php echo $idord;?>">
+             <input type="hidden" name="idMes" value="<?php echo $fila['idMes'];?>">
             <div class="col-md-12">
             
             <div class="form-group col-md-12">
