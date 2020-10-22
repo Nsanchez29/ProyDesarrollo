@@ -235,6 +235,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <form action="../../modelos/insertarPago.php" method="POST">
           <div class="modal-body">
             
             <div class="col-md-12">
@@ -259,8 +260,9 @@
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <button type="button" id="boton" class="btn btn-primary">Aceptar</button>
+            <button type="button" id="boton" name="guardar" class="btn btn-primary">Aceptar</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
