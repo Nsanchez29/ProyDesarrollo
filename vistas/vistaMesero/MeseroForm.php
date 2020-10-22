@@ -239,7 +239,12 @@
           <div class="modal-body">
              <input type="hidden" name="idOr" value="<?php echo $idord;?>">
             <div class="col-md-12">
-            <input type="hidden" name="totalOrd" id="totalModal" value="<?php echo  $fila['totalOrden'];?>">
+            
+            <div class="form-group col-md-12">
+                <label><strong>Total Orden:</strong></label>
+                <input readonly name="totalModal" id="totalModal" value="<?php echo  $fila['totalOrden'];?>" type="text" class="form-control">
+              </div>
+
               <div class="form-group col-md-12">
                 <label><strong>NIT:</strong></label>
                 <input id="nit" name="nit" type="text" class="form-control">
