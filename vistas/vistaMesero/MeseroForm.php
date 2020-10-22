@@ -237,14 +237,9 @@
           </div>
           <form action="../../modelos/insertarPago.php" method="POST">
           <div class="modal-body">
-            
+             <input type="hidden" name="idOr" value="<?php echo $idord;?>">
             <div class="col-md-12">
-              
-              <div class="form-group col-md-12">
-                <label><strong>Total Orden:</strong></label>
-                <input readonly name="totalModal" id="totalModal" value="<?php echo  $fila['totalOrden'];?>" type="text" class="form-control">
-              </div>
-
+            <input type="hidden" name="totalOrd" id="totalModal" value="<?php echo  $fila['totalOrden'];?>">
               <div class="form-group col-md-12">
                 <label><strong>NIT:</strong></label>
                 <input id="nit" name="nit" type="text" class="form-control">
@@ -265,7 +260,7 @@
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <button type="button" id="boton" name="guardar" class="btn btn-primary">Aceptar</button>
+            <button type="submit" id="boton" name="guardar" class="btn btn-primary">Aceptar</button>
           </div>
           </form>
         </div>
