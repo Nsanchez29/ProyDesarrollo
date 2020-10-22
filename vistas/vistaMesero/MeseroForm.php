@@ -20,7 +20,7 @@
     $fila=mysqli_fetch_array($datos);
 
     
-    $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub
+    $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd
                    from consumoporordenes consord
                    INNER JOIN consumibles as consu on consord.idConsumible = consu.id
                    where consord.idOrden = $idord";
@@ -136,15 +136,17 @@
           </thead>
           <tbody>
           <?php
+              $i=0;
              while ($row=mysqli_fetch_array($data)){
+              $i++;
               echo"
             <tr>
-              <th scope='row'>1</th>
+              <th scope='row'>"; echo $i; echo "</th>
               <td>"; echo $row['nombre']; echo "</td>
               <td>"; echo $row['cant']; echo "</td>
               <td class='text-center'>
-                <button type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
-                <button type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
+                <button onclick='editarCantidad("; echo $row['idConsOrd']; echo ", "; echo $row['cant']; echo ")' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
+                <button onclick='eliminarRegistro("; echo $row['idConsOrd']; echo ")' data-toggle='modal' data-target='#exampleModal4' data-toggle='tooltip' data-placement='top' title='Eliminar' type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
               </td>
               <td class='text-right'>"; echo $row['sub']; echo "</td>
             </tr>
@@ -274,6 +276,57 @@
       </div>
     </div>
 
+    <!-- Modal 3-->
+      <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Cantidad</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+              <input type="hidden" id="idEditar" name="idEditar">
+                <div class="form-group col-md-12">
+                    <label><strong>Cantidad:</strong></label>
+                    <input name="cantidadEditar" id="cantidadEditar" type="number" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Modal 4 -->
+        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+              <input type="hidden" id="idEliminar" name="idEliminar">
+                <label><strong>¿Esta seguro que desea eliminar este Alimento de la Orden?</strong></label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
   </body>
 </html>
 
@@ -282,7 +335,8 @@
 		$('#lista1').change(function(){
 			recargarLista();
 		});
-	})
+	});
+
 
   $(document).ready(function(){
     $('#boton').attr("disabled", true);
@@ -302,8 +356,17 @@
 	})
 </script>
 <script type="text/javascript">
+
+  function editarCantidad(id, cantidad){
+    $('#cantidadEditar').val(cantidad);
+    $('#idEditar').val(id);
+  };
+
+  function eliminarRegistro(id){
+    $('#idEliminar').val(id);
+  };
+
 	function recargarLista(){
-    console.log('ENTRA ACA');
 		$.ajax({
 			type:"POST",
 			url:"datos.php",
