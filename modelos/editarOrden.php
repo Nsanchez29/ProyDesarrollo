@@ -10,13 +10,13 @@ if(isset($_POST['guardar']))
 	    $cantedit = $_POST['cantidadEditar'];
 	 
 	   
-	  	$error="'<script> 
- 		alert('La cantidad no puede ser 0');
- 		location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
+	  		$error="'<script> 
+ 			alert('Error al modificar la orden');
+ 			location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
 
  			$exito="'<script> 
- 		alert('Cantidad modificada con exito');
- 		location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
+ 			alert('Cantidad modificada con exito');
+ 			location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
 	  
 	  	           $valor = "select   consu.precio as precio
                    from consumoporordenes consord
@@ -29,12 +29,7 @@ if(isset($_POST['guardar']))
     			
 
     			
-    			
-
-
-    			if ($cantidad = 0) {
-    				echo $error;
-    			}else{
+    		
 
     				$subord = $cantedit * $precio;
 
@@ -50,8 +45,10 @@ if(isset($_POST['guardar']))
     				mysqli_query($conexion, $orupd);
 
 	  					echo $exito;
+	  				}else{
+	  					echo $error;
 	  				}
-    			}
+    			
 
 
 		

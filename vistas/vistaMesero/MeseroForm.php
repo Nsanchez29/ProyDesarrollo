@@ -309,6 +309,7 @@
 
       <!-- Modal 4 -->
         <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <form action="../../modelos/eliminarConsumo.php" method="POST">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -319,14 +320,16 @@
               </div>
               <div class="modal-body text-center">
               <input type="hidden" id="idEliminar" name="idEliminar">
+                <input type="hidden" name="idOrden" value="<?php echo $idord;?>">
                 <label><strong>¿Esta seguro que desea eliminar este Alimento de la Orden?</strong></label>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Aceptar</button>
+                <button type="submit" name="guardar" class="btn btn-primary">Aceptar</button>
               </div>
             </div>
           </div>
+          </form>
         </div>
 
 

@@ -5,7 +5,7 @@ $continente=$_POST['continente'];
 
 	$sql="SELECT *
 		from consumibles 
-		where idTipoComida='$continente'";
+		where idTipoComida='$continente' and estado = 1";
 
 	$result=mysqli_query($conexion,$sql);
 
