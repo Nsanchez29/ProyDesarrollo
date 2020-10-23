@@ -278,6 +278,7 @@
 
     <!-- Modal 3-->
       <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="../../modelos/editarOrden.php" method="POST">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -289,6 +290,7 @@
             <div class="modal-body">
               <div class="col-md-12">
               <input type="hidden" id="idEditar" name="idEditar">
+              <input type="hidden" name="idOrden" value="<?php echo $idord;?>">
                 <div class="form-group col-md-12">
                     <label><strong>Cantidad:</strong></label>
                     <input name="cantidadEditar" id="cantidadEditar" type="number" class="form-control">
@@ -297,10 +299,11 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Aceptar</button>
+              <button type="submit" name="guardar" class="btn btn-primary">Aceptar</button>
             </div>
           </div>
         </div>
+        </form>
       </div>
 
 
