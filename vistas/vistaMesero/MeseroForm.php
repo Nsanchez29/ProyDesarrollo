@@ -299,7 +299,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" name="guardar" class="btn btn-primary">Aceptar</button>
+              <button id="botonEditar" type="submit" name="guardar" class="btn btn-primary">Aceptar</button>
             </div>
           </div>
         </div>
@@ -340,6 +340,17 @@
 		});
 	});
 
+  $(document).ready(function(){
+		$('#cantidadEditar').change(function(){
+			var cantidad = $('#cantidadEditar').val();
+      if(cantidad <= 0) {
+        $('#botonEditar').attr("disabled", true);
+      } else {
+        $('#botonEditar').attr("disabled", false);
+      }
+		});
+	});
+
 
   $(document).ready(function(){
     $('#boton').attr("disabled", true);
@@ -347,7 +358,6 @@
 			var total = parseFloat($('#totalModal').val());
       var pago = parseFloat($('#cantidadPago').val());
       var cambio = pago - total;
-      console.log('CAMBIOO', cambio);
       if(pago >= total) {
         $('#cantidadCambio').val(cambio);
         $('#boton').attr("disabled", false);
