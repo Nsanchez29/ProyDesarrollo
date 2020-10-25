@@ -54,16 +54,41 @@
 
     <div style="margin: auto; box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;" class="col-md-11 card shadow-inset">
       <div class="card-body col-md-12">
+        <div class="jumbotron" style="margin-top: 35px;">
         <div class="item">
-          <div id="form" class="item">
+          <div class="item">
+          <!--<form class="form-inline">
+             <div class="form-group mx-sm-3">
+                 <label for="inputUser" class="sr-only">Fecha</label>
+                 <input type="date" class="form-control" id="inputUser" placeholder="User">
+             </div>
+             <div class="form-group mx-sm-3">
+                 <label for="inputPass" class="sr-only">No. de Orden</label>
+                 <input type="text" class="form-control" id="inputPass" placeholder="Pass">
+             </div>
+             <button type="submit" class="btn btn-primary">Confirm</button>
+          </form>-->
+          <div class="container h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-sm-8 align-self-center text-center">
+                <div class="card shadow">
+                    <div class="card-body align-self-center text-center"> 
+          <form method="POST" class="form-inline" action="detalleOrdenes.php" onSubmit="return validarForm(this)">
+            
           <h3>Buscar Orden:</h3>
-          <form method="POST" class="form-inline" id="formulario" action="detalleOrdenes.php" onSubmit="return validarForm(this)">
             <div class="form-group mx-sm-3 mb-2">
               <input type="date" class="form-control" name="fecha" placeholder="Fecha de la Orden">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
               <input type="text" class="form-control" name="orden" placeholder="No. de Orden">
             </div>
               <input type="submit" value="Buscar" id="buscar" name="buscar" class="btn btn-primary mb-2">
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
           </div>      
         </div>
       </div>

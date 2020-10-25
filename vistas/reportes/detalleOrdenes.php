@@ -64,17 +64,19 @@
                     $consulta = "SELECT ord.id as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas as mesa on mesa.id = ord.idMesa INNER JOIN usuarios as user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas as tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha like '%$fecha%' AND ord.id LIKE '%$orden%'";
                     $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
                     $datos2=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-                    $otro=mysqli_fetch_array($datos);
+                    $otro=mysqli_fetch_array($datos2);
               ?>
               <div class="col-md-12">
               <div>
-                <h3>Reporte de Ordenes</h3>
-                <h4>Número de Orden:<label><?=$otro['numOrden']?>  /  </label>Fecha:<label><?=$otro['fecha']?></label></h4>
-                <p>Número de Mesa:<label><?=$otro['numMesa']?></label></p>
-                <p>Cantidad de Sillas: <label><?=$otro['canSillas']?></label></p>
-                <span>Usuario:<label><?=$otro['usuario']?></span>
+                <br>
+                <h3 class="text-center font-weight-bold">Reporte de Ordenes</h3>
+                <br>
+                <h4 class="text-center font-weight-bold">Número de Orden:  <label><?=$otro['numOrden']?>  <span>|</span></label>  Fecha:   <label><?=$otro['fecha']?></label></h4>
+                <br>
+                <h5>Número de Mesa:  <label><?=$otro['numMesa']?></label></h5>
+                <h5>Cantidad de Sillas:  <label><?=$otro['canSillas']?></label></h5>
+                <h5>Usuario:  <label><?=$otro['usuario']?></h5>
               </div>
-              <br>
               <br>
               <table class="table">
                 <thead class="thead-dark">
@@ -102,22 +104,24 @@
                         //$total=mysqli_fetch_array($datos2);
                         ?>
                     <tr>
-                      <td class="text-center" scope="col">Total:</td>
+                      <td class="text-center font-weight-bold" scope="col">Total:</td>
                       <td class="text-center" scope="col"></td>
                       <td class="text-center" scope="col"></td>
                       <td class="text-center" scope="col"></td>
-                      <td class="text-center" scope="col"><?=$otro['total']?></td>
+                      <td class="text-center font-weight-bold" scope="col"><?=$otro['total']?></td>
                     </tr>
                 </tbody>
               </table>
-              <div class="row align-items-center">
+              <!--<div class="row align-items-center">
                 <div class="col py-3 px-md-5 bordered col-example">Total</div>
                 <div class="col-md-14"><?=$total['total']?></div>
-              </div>
+              </div>-->
               <div class="col-md-10">
                 <br>
-                <span class="spacer"></span>
-                <a href="detalleOrdenesPDF.php?t=pdf&palabra=<?php echo urlencode($buscar);?>" id="GenerarMysql" class="btn btn-primary mb-2 float-right">Crear PDF
+                <a href="buscar.php" class="btn btn-primary mb-1 float-left">Nueva Busqueda
+                  <i class="fas fa-file-pdf"></i>
+                </a>   
+                <a href="detalleOrdenesPDF.php?t=pdf&palabra=<?php echo urlencode($buscar);?>" id="GenerarMysql" class="btn btn-primary mb-3 float-right">Crear PDF
                   <i class="fas fa-file-pdf"></i>
                 </a>                      
                 <br>
