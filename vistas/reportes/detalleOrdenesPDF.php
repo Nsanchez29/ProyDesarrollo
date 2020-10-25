@@ -19,7 +19,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>Proyecto Restaurante</title>
+    <title></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <link
@@ -140,7 +140,7 @@ $dompdf = new DOMPDF();
 $dompdf->load_html(ob_get_clean());
 $dompdf->render();
 $pdf = $dompdf->output();
-$filename = "ejemplo.pdf";
+$filename = "ReporteDetalleOrdenes.pdf";
 file_put_contents($filename, $pdf);
 $dompdf->stream($filename);
 ?>
