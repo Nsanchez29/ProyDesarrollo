@@ -13,21 +13,26 @@
 
 
          
-         $consulta = "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, mes.numero as numeroMesa, mes.cantidadMaxSillas, ord.id as idOrd 
-          from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario 
-          INNER JOIN mesas mes on mes.id = ord.idMesa WHERE ord.id = $idord";
-          $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-          $fila=mysqli_fetch_array($datos);
+    $consulta = "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, mes.numero as numeroMesa, mes.cantidadMaxSillas,mes.id as idMes, ord.id as idOrd 
+     from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario 
+     INNER JOIN mesas mes on mes.id = ord.idMesa WHERE ord.id = $idord";
+    $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+    $fila=mysqli_fetch_array($datos);
 
-
-           $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub
-                        from consumoporordenes consord
-                        INNER JOIN consumibles as consu on consord.idConsumible = consu.id
-                        where consord.idOrden = $idord";
-          $data=mysqli_query($conexion,$resultado) or die(mysqli_error($conexion));
-          
-
-
+    
+    $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd
+                   from consumoporordenes consord
+                   INNER JOIN consumibles as consu on consord.idConsumible = consu.id
+                   where consord.idOrden = $idord";
+    $data=mysqli_query($conexion,$resultado) or die(mysqli_error($conexion));
+    
+    $tiposConsumible = "select * from tipocomidas";
+    $response=mysqli_query($conexion,$tiposConsumible) or die(mysqli_error($conexion));
+      
+    $numord = "select * from consumoporordenes where idOrden = $idord";
+    $num= mysqli_query($conexion,$numord) or die(mysqli_error($conexion));
+    $lineas=mysqli_num_rows($num);
+            
    
 ?>
 
@@ -46,10 +51,9 @@
     />
     <!-- JS, Popper.js, and jQuery -->
     <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
       integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -113,8 +117,8 @@
           <h5>Mesa No.<?php echo $fila['numeroMesa'];?></h5>
         </div>
         <span class="spacer"></span>
-        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary"><span class="material-icons">add</span></button>
-        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-success"><span class="material-icons">done_outline</span></button>
+        <button style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><span class="material-icons">add</span></button>
+        <a href="Mesero.php" style="height: fit-content;margin: auto 5px;" type="button" class="btn btn-success"><span class="material-icons">done_outline</span></a>
       </div>
     <hr style="margin-top:0px">
 
@@ -132,38 +136,260 @@
           </thead>
           <tbody>
           <?php
+              $i=0;
              while ($row=mysqli_fetch_array($data)){
+              $i++;
               echo"
             <tr>
-              <th scope='row'>1</th>
+              <th scope='row'>"; echo $i; echo "</th>
               <td>"; echo $row['nombre']; echo "</td>
               <td>"; echo $row['cant']; echo "</td>
               <td class='text-center'>
-                <button type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
-                <button type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
+                <button onclick='editarCantidad("; echo $row['idConsOrd']; echo ", "; echo $row['cant']; echo ")' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
+                <button onclick='eliminarRegistro("; echo $row['idConsOrd']; echo ")' data-toggle='modal' data-target='#exampleModal4' data-toggle='tooltip' data-placement='top' title='Eliminar' type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
               </td>
               <td class='text-right'>"; echo $row['sub']; echo "</td>
             </tr>
+
             ";
           }
            ?>
           </tbody>
         </table>
-      </div>    
+
+      </div>
+
     </div> 
-    
+       
     <hr>
+    <?php  
+    echo "
             <div class='col-md-12 item'>
               <span><strong>Total:</strong></span>
               <span class='spacer'></span>
-              <span>Q.<?php echo $fila['totalOrden'];?></span>
+              <span>Q.";echo $fila['totalOrden']; echo"</span>
               </div>
-    <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-  </div>
-</div>
-      
+              <br>
+              <button data-toggle='modal' data-target='#exampleModal2' type='button' style='margin-right: 16px' class='btn btn-primary float-right'"; 
+
+               if ($lineas == 0) {
+                echo "disabled";
+                }
+
+                echo">Pagar</button>  
+          
+            </div>  
+          </div>
+        "; 
+      ?>
 
       </div>
+      
     </div>
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="../../modelos/insertarconsumo.php" method="POST">
+            <div class="modal-body">
+              <div class="col-md-12">
+                <input type="hidden" name="idOrden" value="<?php echo $idord;?>">
+                <div class="form-group col-md-12">
+                  <label><strong>Tipo Comida:</strong></label>
+                  <select class="form-control"  id="lista1" name="lista1">
+                    <option value="0">Selecciona una opcion</option>
+                    <?php
+                      while ($row2=mysqli_fetch_array($response)){
+                        echo"<option value='";echo $row2['id']; echo"'>";echo $row2['nombre'];echo"</option>";
+                      }
+                    ?>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-12" id="select2lista"></div>
+                <div class="form-group col-md-12" id="cantidadConsumo"></div>
+                
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+              <button type="submit" name="save" class="btn btn-primary">Agregar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal2 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Pagar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="../../modelos/insertarPago.php" method="POST">
+          <div class="modal-body">
+             <input type="hidden" name="idOr" value="<?php echo $idord;?>">
+             <input type="hidden" name="idMes" value="<?php echo $fila['idMes'];?>">
+            <div class="col-md-12">
+            
+            <div class="form-group col-md-12">
+                <label><strong>Total Orden:</strong></label>
+                <input readonly name="totalModal" id="totalModal" value="<?php echo  $fila['totalOrden'];?>" type="text" class="form-control">
+              </div>
+
+              <div class="form-group col-md-12">
+                <label><strong>NIT:</strong></label>
+                <input id="nit" name="nit" type="text" class="form-control">
+              </div>
+
+              <div class="form-group col-md-12">
+                <label><strong>Cantidad Pago:</strong></label>
+                <input id="cantidadPago" name="cantidadPago" type="text" class="form-control">
+              </div>
+
+              <div class="form-group col-md-12">
+                <label><strong>Cantidad Cambio:</strong></label>
+                <input readonly id="cantidadCambio" name="cantidadCambio" value="0" type="text" class="form-control">
+              </div>
+
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="submit" id="boton" name="guardar" class="btn btn-primary">Aceptar</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3-->
+      <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="../../modelos/editarOrden.php" method="POST">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar Cantidad</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+              <input type="hidden" id="idEditar" name="idEditar">
+              <input type="hidden" name="idOrden" value="<?php echo $idord;?>">
+                <div class="form-group col-md-12">
+                    <label><strong>Cantidad:</strong></label>
+                    <input name="cantidadEditar" id="cantidadEditar" type="number" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button id="botonEditar" type="submit" name="guardar" class="btn btn-primary">Aceptar</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+
+
+      <!-- Modal 4 -->
+        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <form action="../../modelos/eliminarConsumo.php" method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+              <input type="hidden" id="idEliminar" name="idEliminar">
+                <input type="hidden" name="idOrden" value="<?php echo $idord;?>">
+                <label><strong>¿Esta seguro que desea eliminar este Alimento de la Orden?</strong></label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" name="guardar" class="btn btn-primary">Aceptar</button>
+              </div>
+            </div>
+          </div>
+          </form>
+        </div>
+
+
   </body>
 </html>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#lista1').change(function(){
+			recargarLista();
+		});
+	});
+
+  $(document).ready(function(){
+		$('#cantidadEditar').change(function(){
+			var cantidad = $('#cantidadEditar').val();
+      if(cantidad <= 0) {
+        $('#botonEditar').attr("disabled", true);
+      } else {
+        $('#botonEditar').attr("disabled", false);
+      }
+		});
+	});
+
+
+  $(document).ready(function(){
+    $('#boton').attr("disabled", true);
+		$('#cantidadPago').change(function(){
+			var total = parseFloat($('#totalModal').val());
+      var pago = parseFloat($('#cantidadPago').val());
+      var cambio = pago - total;
+      if(pago >= total) {
+        $('#cantidadCambio').val(cambio);
+        $('#boton').attr("disabled", false);
+      } else {
+        $('#cantidadCambio').val(0);
+        $('#boton').attr("disabled", true);
+      }
+		});
+	})
+</script>
+<script type="text/javascript">
+
+  function editarCantidad(id, cantidad){
+    $('#cantidadEditar').val(cantidad);
+    $('#idEditar').val(id);
+  };
+
+  function eliminarRegistro(id){
+    $('#idEliminar').val(id);
+  };
+
+	function recargarLista(){
+		$.ajax({
+			type:"POST",
+			url:"datos.php",
+			data:"continente=" + $('#lista1').val(),
+			success:function(r){
+				$('#select2lista').html(r);
+			}
+		});
+	}
+</script>
