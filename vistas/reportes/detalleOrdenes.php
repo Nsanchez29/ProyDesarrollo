@@ -55,52 +55,64 @@
     <div style="margin: auto; box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;" class="col-md-11 card shadow-inset">
       <div class="card-body col-md-12">
         <div class="item">
-          <h3>Buscar Orden:</h3>
-          <form method="POST" class="form-inline" action="detalleOrdenes.php" onSubmit="return validarForm(this)">
-            <div class="form-group mx-sm-3 mb-2">
-              <input type="text" class="form-control" name="palabra" placeholder="No. de Orden">
-            </div>
-              <input type="submit" value="Buscar" name="buscar" class="btn btn-primary mb-2">
-          </form>
           <?php
               include '../../config/conexion.php';                  
               if(isset($_POST['buscar']))                  
               {   
+                    $fecha = $_POST['fecha'];
+                    $orden = $_POST['orden'];
+                    $consulta = "SELECT ord.id as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas as mesa on mesa.id = ord.idMesa INNER JOIN usuarios as user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas as tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha like '%$fecha%' AND ord.id LIKE '%$orden%'";
+                    $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                    $datos2=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                    $otro=mysqli_fetch_array($datos);
               ?>
               <div class="col-md-12">
+              <div>
+                <h3>Reporte de Ordenes</h3>
+                <h4>Número de Orden:<label><?=$otro['numOrden']?>  /  </label>Fecha:<label><?=$otro['fecha']?></label></h4>
+                <p>Número de Mesa:<label><?=$otro['numMesa']?></label></p>
+                <p>Cantidad de Sillas: <label><?=$otro['canSillas']?></label></p>
+                <span>Usuario:<label><?=$otro['usuario']?></span>
+              </div>
               <br>
               <br>
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th class="text-center" scope="col">Orden</th>
-                    <th class="text-center" scope="col">Comida</th>
+                    <th class="text-center" scope="col">Tipo de Platillo</th>
+                    <th class="text-center" scope="col">Nombre del Platillo</th>
+                    <th class="text-center" scope="col">Precio</th>
                     <th class="text-center" scope="col">Cantidad</th>
-                    <th class="text-center" scope="col">SubTotal</th>
-                    <th class="text-center" scope="col">Total</th>
-                    <th class="text-center" scope="col">Fecha</th>
+                    <th class="text-center" scope="col">Sub Total</th>
                   </tr>
                 </thead>
                 <tbody> 
                 <?php
-                    $buscar = $_POST["palabra"];
-                    $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible WHERE ord.id like '%$buscar%'";
-                    $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
                     while ($fila=mysqli_fetch_array($datos)){
                     ?> 
                     <tr>
-                      <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
+                      <td class="text-center" scope="col"><?=$fila['tipoComida']?></td>
                       <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
-                      <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
+                      <td class="text-center" scope="col"><?=$fila['precioComida']?></td>
+                      <td class="text-center" scope="col"><?=$fila['cantPlatos']?></td>
                       <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
-                      <td class="text-center" scope="col"><?=$fila['total']?></td>
-                      <td class="text-center" scope="col"><?=$fila['fecha']?></td>
                     </tr> 
                     <?php 
                         }
+                        //$total=mysqli_fetch_array($datos2);
                         ?>
+                    <tr>
+                      <td class="text-center" scope="col">Total:</td>
+                      <td class="text-center" scope="col"></td>
+                      <td class="text-center" scope="col"></td>
+                      <td class="text-center" scope="col"></td>
+                      <td class="text-center" scope="col"><?=$otro['total']?></td>
+                    </tr>
                 </tbody>
               </table>
+              <div class="row align-items-center">
+                <div class="col py-3 px-md-5 bordered col-example">Total</div>
+                <div class="col-md-14"><?=$total['total']?></div>
               </div>
               <div class="col-md-10">
                 <br>
@@ -111,69 +123,11 @@
                 <br>
               </div>
           <?php
-              }else
-                  {                 
-                  ?>
-                  <div class="col-md-12">
-                  <br>
-                  <br>
-                  <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th class="text-center" scope="col">Orden</th>
-                        <th class="text-center" scope="col">Comida</th>
-                        <th class="text-center" scope="col">Cantidad</th>
-                        <th class="text-center" scope="col">SubTotal</th>
-                        <th class="text-center" scope="col">Total</th>
-                        <th class="text-center" scope="col">Fecha</th>
-                      </tr>
-                    </thead>
-                  <tbody> 
-                  <?php
-                      $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible";
-                      $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-                      while ($fila=mysqli_fetch_array($datos)){
-                      ?> 
-                      <tr>
-                        <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
-                        <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
-                        <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
-                        <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
-                        <td class="text-center" scope="col"><?=$fila['total']?></td>
-                        <td class="text-center" scope="col"><?=$fila['fecha']?></td>
-                      </tr> 
-                      <?php 
-                          }
-                      ?>
-                  </tbody>
-                  </table>
-                </div>
-                <div class="col-md-10">
-                <br>
-                <span class="spacer"></span>
-                  <a href="detalleOrdenesPDF.php?t=pdf" id="GenerarMysql" class="btn btn-primary mb-2 float-right">Crear PDF
-                    <i class="fas fa-file-pdf"></i>
-                  </a>                       
-                <br>
-                </div>
-                <?php
-                    }
-                    ?>              
+              }
+              ?>              
           </div>
         <hr>
       </div>
     </div>
-  <script type="text/javascript">
-      function validarForm(formulario) 
-      {
-          if(formulario.palabra.value.length==0) 
-          { //¿Tiene 0 caracteres?
-              formulario.palabra.focus();  // Damos el foco al control
-              alert('Debes rellenar este campo'); //Mostramos el mensaje
-              return false; 
-           } //devolvemos el foco  
-           return true; //Si ha llegado hasta aquí, es que todo es correcto 
-       }   
-  </script>
   </body>
 </html>
