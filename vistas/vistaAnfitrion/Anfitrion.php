@@ -91,7 +91,10 @@
           include '../../config/conexion.php';
           $id = $_SESSION["idMesero"];
           $consulta =
-          "SELECT * FROM mesas where estado != 0";
+          "SELECT m.id as id, m.numero as numero, m.cantidadMaxSillas as sillas, u.nombre as usuario, m.estado FROM ordenes o 
+          INNER JOIN mesas m on o.idMesa = m.id
+          INNER JOIN usuarios u on o.idUsuario = u.id
+          WHERE m.estado !=0";
           $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
           while ($fila=mysqli_fetch_array($datos)){
             
@@ -126,7 +129,13 @@
                   </div>
                   <hr>
                   <div class='text-center'>
-                    <h1 class='orden'>";echo $fila['cantidadMaxSillas']; echo "</h1><h3> Personas</h3>
+                    <h1 class='orden'>";echo $fila['sillas']; echo "</h1><h3> Personas</h3>
+                  </div>
+                  <hr>
+                  <div class='text-center'>
+                    <small>Mesero Asignado: </small>";
+                    echo "</h1>"; echo $fila['usuario']; echo "</h1>
+                    
                   </div>
                   <div class='card-footer'>";
                   $boton = $fila['estado'];
