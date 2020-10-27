@@ -43,94 +43,92 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
-    ></script><!--
-    <link rel="stylesheet" href="../../css/styles.css" />-->
+    ></script>
+    <!--<link rel="stylesheet" href="../../css/styles.css" />-->
   </head>
-    <body>
-
-    <h1>Reporte de La Orden</h1>
-    <p>Listo PUTOS............</p>
-      <?php
-          include '../../config/conexion.php';
-          if(isset($_GET['palabra'])) 
-            {   
-          ?>
-          <div class="col-md-12">
-          <br>
-          <br>
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th class="text-center" scope="col">Orden</th>
-                <th class="text-center" scope="col">Comida</th>
-                <th class="text-center" scope="col">Cantidad</th>
-                <th class="text-center" scope="col">SubTotal</th>
-                <th class="text-center" scope="col">Total</th>
-                <th class="text-center" scope="col">Fecha</th>
-              </tr>
-            </thead>
-            <tbody> 
-            <?php
-                $buscar = $_GET["palabra"];
-                $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible WHERE ord.id like '%$buscar%'";
-                $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-                while ($fila=mysqli_fetch_array($datos)){
-                ?> 
-                <tr>
-                  <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
-                  <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
-                  <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
-                  <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
-                  <td class="text-center" scope="col"><?=$fila['total']?></td>
-                  <td class="text-center" scope="col"><?=$fila['fecha']?></td>
-                </tr> 
-                <?php 
-                    }
-                    ?>
-            </tbody>
-          </table>
+  <body>
+          <?php
+              include '../../config/conexion.php';                  
+              if(isset($_GET['numOrden']))                  
+              {   
+                    $fecha = $_GET['fechaOrden'];
+                    $orden = $_GET['numOrden'];
+                    $consulta = "SELECT ord.numero as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas as mesa on mesa.id = ord.idMesa INNER JOIN usuarios as user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas as tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha like '%$fecha%' AND ord.numero LIKE '%$orden%'";
+                    $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                    $dto=mysqli_fetch_array($datos);
+              ?>
+              <div class="col-md-12">
+              <div>
+                <br>
+                <h3 class="text-center font-weight-bold">Reporte de Ordenes</h3>
+                <br>
+                <div class="">
+                  <div class="">
+                    <h4 class="text-center font-weight-bold">Número de Orden: <?=$dto['numOrden']?></h4>
+                    <h4 class="text-center font-weight-bold">Fecha: <?=$dto['fecha']?></h4>
+                  </div>
+                <br>
+                </div>
+                <div class="float-left">
+                  <div class="form-inline form-group mx-sm-3 mb-2">
+                    <h5 class="font-weight-bold">Número de Mesa: <?=$dto['numMesa']?></h5>
+                  </div>
+                  <div class="form-inline form-group mx-sm-3 mb-2">
+                    <h5 class="font-weight-bold">Cantidad de Sillas: <?=$dto['canSillas']?></h5>
+                  </div>
+                  <div class="form-inline form-group mx-sm-3 mb-3">
+                    <h5 class="font-weight-bold">Usuario: <?=$dto['usuario']?></h5> 
+                  </div>
+                </div>
+              </div>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="text-left" scope="col">Tipo de Platillo</th>
+                    <th class="text-left" scope="col">Nombre del Platillo</th>
+                    <th class="text-left" scope="col">Precio</th>
+                    <th class="text-left" scope="col">Cantidad</th>
+                    <th class="text-left" scope="col">Sub Total</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                <?php
+                    $campos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                    while ($fila=mysqli_fetch_array($campos)){
+                    ?> 
+                    <tr>
+                      <td class="text-left" scope="col"><?=$fila['tipoComida']?></td>
+                      <td class="text-left" scope="col"><?=$fila['nombreComida']?></td>
+                      <td class="text-left" scope="col">Q. <?=$fila['precioComida']?></td>
+                      <td class="text-left" scope="col"><?=$fila['cantPlatos']?></td>
+                      <td class="text-left" scope="col">Q. <?=$fila['subTotal']?></td>
+                    </tr> 
+                    <?php 
+                        }
+                        ?>
+                    <tr>
+                      <td class="text-left font-weight-bold" scope="col">Total:</td>
+                      <td class="text-left" scope="col"></td>
+                      <td class="text-left" scope="col"></td>
+                      <td class="text-left" scope="col"></td>
+                      <td class="text-left font-weight-bold" scope="col">Q. <?=$dto['total']?></td>
+                    </tr>
+                </tbody>
+              </table>
+              <br>
+          <?php
+              }
+              ?>              
           </div>
-      <?php
-          }else
-              {                  
-          ?>
-          <div class="col-md-12">
-          <br>
-          <br>
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th class="text-center" scope="col">Orden</th>
-                <th class="text-center" scope="col">Comida</th>
-                <th class="text-center" scope="col">Cantidad</th>
-                <th class="text-center" scope="col">SubTotal</th>
-                <th class="text-center" scope="col">Total</th>
-                <th class="text-center" scope="col">Fecha</th>
-              </tr>
-            </thead>
-            <tbody> 
-            <?php
-                $consulta = "SELECT ord.id as numeroOrden, cons.nombre as nombreComida, detOrd.cantidad as cantidadComida, detOrd.subTotal as subTotal, ord.total as total, ord.fecha as fecha FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN consumibles cons on cons.id = detOrd.idConsumible";
-                $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-                while ($fila=mysqli_fetch_array($datos)){
-                ?> 
-                <tr>
-                  <td class="text-center" scope="col"><?=$fila['numeroOrden']?></td>
-                  <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
-                  <td class="text-center" scope="col"><?=$fila['cantidadComida']?></td>
-                  <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
-                  <td class="text-center" scope="col"><?=$fila['total']?></td>
-                  <td class="text-center" scope="col"><?=$fila['fecha']?></td>
-                </tr> 
-                <?php 
-                    }
-                    ?>
-            </tbody>
-          </table>
-          </div>
-      <?php
-          }
-          ?> 
+        <hr>
+      </div>
+    </div>
   </body>
 </html>
 <?php

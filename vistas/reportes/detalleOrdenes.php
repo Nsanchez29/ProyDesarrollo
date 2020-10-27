@@ -61,72 +61,90 @@
               {   
                     $fecha = $_POST['fecha'];
                     $orden = $_POST['orden'];
-                    $consulta = "SELECT ord.id as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas as mesa on mesa.id = ord.idMesa INNER JOIN usuarios as user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas as tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha like '%$fecha%' AND ord.id LIKE '%$orden%'";
+                    $consulta = "SELECT ord.numero as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas as mesa on mesa.id = ord.idMesa INNER JOIN usuarios as user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas as tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha like '%$fecha%' AND ord.numero LIKE '%$orden%'";
                     $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-                    $datos2=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
-                    $otro=mysqli_fetch_array($datos2);
+                    $dto=mysqli_fetch_array($datos);
+                if ($dto>0) {
               ?>
               <div class="col-md-12">
               <div>
                 <br>
                 <h3 class="text-center font-weight-bold">Reporte de Ordenes</h3>
                 <br>
-                <h4 class="text-center font-weight-bold">Número de Orden:  <label><?=$otro['numOrden']?>  <span>|</span></label>  Fecha:   <label><?=$otro['fecha']?></label></h4>
+                <div class="container text-center h-100 d-flex justify-content-center align-items-center">
+                  <div class="form-inline form-group mx-sm-3 mb-2">
+                    <h4 class="text-center font-weight-bold">Número de Orden:&nbsp&nbsp</h4><h4><?=$dto['numOrden']?></h4><h2>&nbsp&nbsp|&nbsp&nbsp</h2><h4 class="text-center font-weight-bold">Fecha:&nbsp&nbsp</h4><h4><?=$dto['fecha']?></h4>
+                  </div>
                 <br>
-                <h5>Número de Mesa:  <label><?=$otro['numMesa']?></label></h5>
-                <h5>Cantidad de Sillas:  <label><?=$otro['canSillas']?></label></h5>
-                <h5>Usuario:  <label><?=$otro['usuario']?></h5>
+                </div>
+                <div class="float-left">
+                  <div class="form-inline form-group mx-sm-3 mb-2">
+                    <h5 class="text-center font-weight-bold">Número de Mesa:&nbsp&nbsp</h5><h5><?=$dto['numMesa']?></h5>
+                  </div>
+                  <div class="form-inline form-group mx-sm-3 mb-2">
+                    <h5 class="text-center font-weight-bold">Cantidad de Sillas:&nbsp&nbsp</h5><h5><?=$dto['canSillas']?></h5>
+                  </div>
+                  <div class="form-inline form-group mx-sm-3 mb-3">
+                    <h5 class="text-center font-weight-bold">Usuario:&nbsp&nbsp</h5><h5><?=$dto['usuario']?></h5> 
+                  </div>
+                </div>
               </div>
               <br>
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th class="text-center" scope="col">Tipo de Platillo</th>
-                    <th class="text-center" scope="col">Nombre del Platillo</th>
-                    <th class="text-center" scope="col">Precio</th>
-                    <th class="text-center" scope="col">Cantidad</th>
-                    <th class="text-center" scope="col">Sub Total</th>
+                    <th class="text-left" scope="col">Tipo de Platillo</th>
+                    <th class="text-left" scope="col">Nombre del Platillo</th>
+                    <th class="text-left" scope="col">Precio</th>
+                    <th class="text-left" scope="col">Cantidad</th>
+                    <th class="text-left" scope="col">Sub Total</th>
                   </tr>
                 </thead>
                 <tbody> 
                 <?php
-                    while ($fila=mysqli_fetch_array($datos)){
+                    $campos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+                    while ($fila=mysqli_fetch_array($campos)){
                     ?> 
                     <tr>
-                      <td class="text-center" scope="col"><?=$fila['tipoComida']?></td>
-                      <td class="text-center" scope="col"><?=$fila['nombreComida']?></td>
-                      <td class="text-center" scope="col"><?=$fila['precioComida']?></td>
-                      <td class="text-center" scope="col"><?=$fila['cantPlatos']?></td>
-                      <td class="text-center" scope="col"><?=$fila['subTotal']?></td>
+                      <td class="text-left" scope="col"><?=$fila['tipoComida']?></td>
+                      <td class="text-left" scope="col"><?=$fila['nombreComida']?></td>
+                      <td class="text-left" scope="col">Q. <?=$fila['precioComida']?></td>
+                      <td class="text-left" scope="col"><?=$fila['cantPlatos']?></td>
+                      <td class="text-left" scope="col">Q. <?=$fila['subTotal']?></td>
                     </tr> 
                     <?php 
                         }
-                        //$total=mysqli_fetch_array($datos2);
                         ?>
                     <tr>
-                      <td class="text-center font-weight-bold" scope="col">Total:</td>
-                      <td class="text-center" scope="col"></td>
-                      <td class="text-center" scope="col"></td>
-                      <td class="text-center" scope="col"></td>
-                      <td class="text-center font-weight-bold" scope="col"><?=$otro['total']?></td>
+                      <td class="text-left font-weight-bold" scope="col">Total:</td>
+                      <td class="text-left" scope="col"></td>
+                      <td class="text-left" scope="col"></td>
+                      <td class="text-left" scope="col"></td>
+                      <td class="text-left font-weight-bold" scope="col">Q. <?=$dto['total']?></td>
                     </tr>
                 </tbody>
               </table>
-              <!--<div class="row align-items-center">
-                <div class="col py-3 px-md-5 bordered col-example">Total</div>
-                <div class="col-md-14"><?=$total['total']?></div>
-              </div>-->
-              <div class="col-md-10">
+              <br>
+              <div class="form-inline float-right">
                 <br>
-                <a href="buscar.php" class="btn btn-primary mb-1 float-left">Nueva Busqueda
-                  <i class="fas fa-file-pdf"></i>
-                </a>   
-                <a href="detalleOrdenesPDF.php?t=pdf&palabra=<?php echo urlencode($buscar);?>" id="GenerarMysql" class="btn btn-primary mb-3 float-right">Crear PDF
-                  <i class="fas fa-file-pdf"></i>
-                </a>                      
+                <div class="form-group mx-sm-1 mb-2">
+                  <a href="buscarOrden.php" class="btn btn-primary ">Nueva Busqueda
+                    <i class="fas fa-file-pdf"></i>
+                  </a>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">   
+                  <a href="detalleOrdenesPDF.php?t=pdf&fechaOrden=<?php echo urlencode($fecha);?>&numOrden=<?php echo urlencode($orden);?>" class="btn btn-primary">Crear PDF
+                    <i class="fas fa-file-pdf"></i>
+                  </a>
+                </div>                      
                 <br>
               </div>
           <?php
+            }else{
+              echo '<script> alert("No se encontraron datos relacionados con la Busqueda");
+                    location.href = "buscarOrden.php"; 
+                    </script>';
+            }
               }
               ?>              
           </div>
