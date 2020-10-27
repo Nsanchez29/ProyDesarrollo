@@ -63,13 +63,14 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Tipo de Comida</th>
+                  <th scope="col">Estado</th>
                   <th scope="col">Editar</th>
-                  <th scope="col">Desactivar</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
                 <tbody>
                   <?php
-                    $tiposcomida = "SELECT * from tipocomidas where estado = 1";
+                    $tiposcomida = "SELECT * from tipocomidas ";
                     $Admintipos = mysqli_query($conexion, $tiposcomida);
 
                     foreach ($Admintipos as $colTipo) {
@@ -78,9 +79,30 @@
                   <tr>
                     <td><?php echo $colTipo['id']; ?></td>
                     <td><?php echo $colTipo['nombre']; ?></td>
+                    <?php
+                      if ($colTipo['estado']==0) {
+                       echo "<td>"; echo "Desactivado"; echo "</td>";
+                      }else if ($colTipo['estado'] ==1) {
+                          echo "<td>"; echo "Activado"; echo "</td>";
+                      }
+                    ?>
                     <td><button class="btn btn-warning Editartipo" data-toggle='modal' data-target='#Editartipo'><span class="material-icons">create</span></button> </td>
-                    <td><a href="../../modelos/eliminartipo.php?id=<?php echo $colTipo['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
-                  </tr>
+                  
+
+                  <?php
+
+                      if ($colTipo['estado']==0) {
+                        ?>
+                       <td><a href="../../modelos/activartipo.php?id=<?php echo $colTipo['id']; ?>" class="btn btn-success btn-block">Activar</a></td>
+                       <?php
+                      }else if ($colTipo['estado'] ==1) {
+                        ?>
+                         <td><a href="../../modelos/eliminartipo.php?id=<?php echo $colTipo['id']; ?>" class="btn btn-danger btn-block">Desactivar</a></td>
+                           <?php
+                      }
+
+                    ?>
+                    </tr>
                   <?php
                     }
                   ?>

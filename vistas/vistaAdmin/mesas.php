@@ -64,13 +64,14 @@
                   <th scope="col">#</th>
                   <th scope="col">Numero de Mesa</th>
                   <th scope="col">Cantidad de Personas</th>
+                  <th scope="col">Estado</th>
                   <th scope="col">Editar</th>
-                  <th scope="col">Desactivar</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
                 <tbody>
                   <?php
-                    $mesas = "select * from mesas where estado = 1";
+                    $mesas = "select * from mesas";
                     $Adminmesa = mysqli_query($conexion, $mesas);
 
                     foreach ($Adminmesa as $columna) {
@@ -80,8 +81,29 @@
                     <td><?php echo $columna['id']; ?></td>
                     <td><?php echo $columna['numero']; ?></td>
                     <td><?php echo $columna['cantidadMaxSillas']; ?></td>
+                    <?php
+                      if ($columna['estado']==0) {
+                       echo "<td>"; echo "Desactivada"; echo "</td>";
+                      }else if ($columna['estado'] ==1 || $columna['estado']==2 ) {
+                          echo "<td>"; echo "Activada"; echo "</td>";
+                      }
+                    ?>
                     <td><button class="btn btn-warning Editarmesa" data-toggle='modal' data-target='#Editarmesa'><span class="material-icons">create</span></button> </td>
-                    <td><a href="../../modelos/eliminarmesa.php?id=<?php echo $columna['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
+                    <?php
+
+                      if ($columna['estado']==0) {
+                        ?>
+                       <td><a href="../../modelos/activarmesa.php?id=<?php echo $columna['id']; ?>" class="btn btn-success btn-block">Activar</a></td>
+                       <?php
+                      }else if ($columna['estado'] ==1 || $columna['estado']==2 ) {
+                        ?>
+                          <td><a href="../../modelos/eliminarmesa.php?id=<?php echo $columna['id']; ?>" class="btn btn-danger btn-block">Desactivar</a></td>
+                          <?php
+                      }
+
+                    ?>
+                    <!--<td><a href="../../modelos/eliminarmesa.php?id=<?php// echo $columna['id']; ?>" class="btn btn-danger"><span class="material-icons">block</span></a></td>
+                    <td><a href="../../modelos/eliminarmesa.php?id=<?php //echo $columna['id']; ?>" class="btn btn-success"><span class="material-icons">done_outline</span></a></td>-->
                   </tr>
                   <?php
                     }

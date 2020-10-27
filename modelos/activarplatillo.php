@@ -4,18 +4,18 @@
 
 
 	$id = $_REQUEST['id'];
-	$estado = 0;
+	$estado = 1;
 
 
 	$eliPlatillo= " UPDATE consumibles SET estado = $estado where id = $id";
 	$resPlatillo = mysqli_query($conexion, $eliPlatillo);
 
 	if ($resPlatillo) {
-					echo '<script> alert("Platillo desactivado");
+					echo '<script> alert("Platillo Activado");
 					location.href = "../vistas/vistaAdmin/platillos.php"; 
 					</script>';
 				}else{
-					echo '<script> alert("error al desactivar el Platillo");
+					echo '<script> alert("error al Activar el Platillo");
 					location.href = "../vistas/vistaAdmin/platillos.php"; 
 					</script>';
 				}

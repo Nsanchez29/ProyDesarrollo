@@ -66,34 +66,56 @@
                   <th scope="col">Descripcion</th>
                   <th scope="col">Precio</th>
                   <th scope="col">Tipo de Comida</th>
+                  <th scope="col">Estado</th>
                   <th scope="col">Editar</th>
-                  <th scope="col">Desactivar</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
                 <tbody>
                   <?php
 
-                    $platillos = "SELECT c.id as id, c.nombre as nombre, c.descripcion as descripcion, c.precio as precio, t.nombre as tipoComida from consumibles c
+                    $platillos = "SELECT c.id as id, c.nombre as nombre, c.descripcion as descripcion, c.precio as precio, t.nombre as tipoComida, c.estado as estado from consumibles c
                     INNER JOIN tipocomidas t on c.idTipoComida = t.id 
-                    where c.estado = 1
                     order by c.id asc";
                     $AdminPlatillo = mysqli_query($conexion, $platillos);
 
                     foreach ($AdminPlatillo as $colPlatillo) {
                       
                   ?>
+                     
                   <tr>
                     <td><?php echo $colPlatillo['id']; ?></td>
                     <td><?php echo $colPlatillo['nombre']; ?></td>
                     <td><?php echo $colPlatillo['descripcion']; ?></td>
                     <td><?php echo $colPlatillo['precio']; ?></td>
                     <td><?php echo $colPlatillo['tipoComida']; ?></td>
+                    <?php
+                      if ($colPlatillo['estado']==0) {
+                       echo "<td>"; echo "Desactivado"; echo "</td>";
+                      }else if ($colPlatillo['estado'] ==1) {
+                          echo "<td>"; echo "Activado"; echo "</td>";
+                      }
+                    ?>
                     <td><button class="btn btn-warning Editarplatillo" data-toggle='modal' data-target='#Editarplatillo'><span class="material-icons">create</span></button> </td>
-                    <td><a href="../../modelos/eliminarPlatillo.php?id=<?php echo $colPlatillo['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
-                  </tr>
+          
+                  <?php
+
+                      if ($colPlatillo['estado']==0) {
+                        ?>
+                       <td><a href="../../modelos/activarplatillo.php?id=<?php echo $colPlatillo['id']; ?>" class="btn btn-success btn-block">Activar</a></td>
+                       <?php
+                      }else if ($colPlatillo['estado'] ==1) {
+                        ?>
+                         <td><a href="../../modelos/eliminarPlatillo.php?id=<?php echo $colPlatillo['id']; ?>" class="btn btn-danger btn-block">Desactivar</a></td>
+                           <?php
+                      }
+
+                    ?>
+                    </tr>
                   <?php
                     }
                   ?>
+
                 </tbody>
             </table>
           </div>
