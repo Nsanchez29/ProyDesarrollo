@@ -2,14 +2,14 @@
 
 	require_once "../config/conexion.php";
 
-	
+	$nombre = $_POST['name'];
 	$usuario = $_POST['usuario'];
-	$pass = $_POST['password'];
+	$pass = sha1($_POST['password']);
 	$rol = $_POST['rol'];
 	$estado = 1;
 
 	
-		$insUsuario= " INSERT INTO usuarios(nombre,password,idRol,estado) VALUES ('$usuario','$pass','$rol','$estado')";
+		$insUsuario= " INSERT INTO usuarios(nombre,username,password,idRol,estado) VALUES ('$nombre','$usuario','$pass','$rol','$estado')";
 		$qUsuario = mysqli_query($conexion,$insUsuario);
 
 				if ($qUsuario) {
