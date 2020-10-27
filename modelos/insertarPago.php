@@ -5,6 +5,7 @@ if(isset($_POST['guardar']))
 {	 
 
 	  $idord = $_POST['idOr'];
+	  $nom = $_POST['nombre'];
 	  $nit = $_POST['nit'];
 	  $mesa = $_POST['idMes'];
 	  $efectivo = $_POST['cantidadPago'];
@@ -18,15 +19,15 @@ if(isset($_POST['guardar']))
 	
 
 	  	$exito="'<script> 
- 		alert('Consumo agregado');
+ 		alert('Pago exitoso');
  		location.href = '../vistas/vistaMesero/Mesero.php';</script>'";
 
  		$error="'<script> 
- 		alert('Error al ingresar consumo');
+ 		alert('Error al ingresar el pago');
  		location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idord."';</script>'";
 
-		 $consul = "INSERT INTO pagos (idOrden,nit,montoEfectivo,cambioEfectivo)
-	    			VALUES ('$idord','$nit','$efectivo','$cambio')";
+		 $consul = "INSERT INTO pagos (idOrden,nombre,nit,montoEfectivo,cambioEfectivo)
+	    			VALUES ('$idord','$nom','$nit','$efectivo','$cambio')";
 	 	 if (mysqli_query($conexion, $consul)) {
 
 	 			$cons = "UPDATE ordenes set estado = 0 where id = $idord";
