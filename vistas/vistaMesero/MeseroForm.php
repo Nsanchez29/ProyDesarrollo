@@ -20,12 +20,11 @@
     $fila=mysqli_fetch_array($datos);
 
     
-    $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd, consord.estado as estado
-                   from consumoporordenes consord
-                   INNER JOIN consumibles as consu on consord.idConsumible = consu.id
-                   where consord.idOrden = $idord";
+      $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd, consord.estado as estado
+                    from consumoporordenes consord
+                    INNER JOIN consumibles as consu on consord.idConsumible = consu.id
+                    where consord.idOrden = $idord";
     $data=mysqli_query($conexion,$resultado) or die(mysqli_error($conexion));
-    $row=mysqli_fetch_array($data);
 
     $tiposConsumible = "select * from tipocomidas";
     $response=mysqli_query($conexion,$tiposConsumible) or die(mysqli_error($conexion));
@@ -143,14 +142,14 @@
           <?php
               $i=0;
              while ($row=mysqli_fetch_array($data)){
-              $id = $row['estado'];
               $i++;
+              $estadoConsumo = $row['estado'];
               echo"
             <tr>
               <th scope='row'>"; echo $i; echo "</th>
               <td>"; echo $row['nombre']; echo "</td>
               <td>"; echo $row['cant']; echo "</td>
-              <td>";if ($id == 0) {
+              <td>";if ($estadoConsumo == 0) {
                     echo "<div class='alert alert-warning text-center' role='alert'>
                            Pendiente
                             </div>";

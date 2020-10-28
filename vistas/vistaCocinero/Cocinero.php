@@ -60,8 +60,8 @@
       .box-waiting {
         padding: 10px 15px 7.5px 15px;
         position: absolute;
-        background: rgb(2,0,36);
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(245,8,8,1) 0%, rgba(252,19,19,1) 43%, rgba(242,131,131,1) 100%, rgba(255,255,255,1) 100%);
+        background: -webkit-linear-gradient(90deg, rgb(237, 189, 22), rgb(255, 249, 125));
+        background: linear-gradient(90deg, rgb(237, 189, 22), rgb(255, 249, 125));
         color: white;
         border-radius: 7px;
         margin-left: -17px;
@@ -72,7 +72,6 @@
       }
 
       .orden {
-        font-size: 60px;
         font-weight: 100;
         color: rgba(0,0,0,0.7);
       }
@@ -82,6 +81,73 @@
   <body>
     
     <?php include("../navbar/navbarCocinero.php");?>
+
+
+
+    <br><br>
+    <div style="margin:auto;" class="col-md-10">
+      <div class=" row">
+
+        <?php
+          include '../../config/conexion.php';
+          $id = $_SESSION["idMesero"];
+          $consulta =
+          "select ord.numero as numeroOrden, ord.total as totalOrden, ord.estado, ord.fecha, 
+          mes.numero as numeroMesa, mes.cantidadMaxSillas, ord.id as ordId 
+          from ordenes ord INNER JOIN usuarios usu on usu.id = ord.idUsuario INNER JOIN mesas mes on mes.id = ord.idMesa 
+          WHERE ord.estado BETWEEN 1 AND 2";
+          $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
+          while ($fila=mysqli_fetch_array($datos)){
+            echo
+            "
+            <div  class='col-md-4'>
+              <div  class='card mb-4 sombra'>
+                <div class='card-body'>
+                  <div class='item'>
+                    <div class='";
+                    $estado = $fila['estado'];
+                    if($estado == 2) {
+                      echo "box-accept";
+                    } else if($estado == 1) {
+                      echo "box-waiting";
+                    };
+                    echo " sombra'><span class='material-icons'>";
+                    
+                    if($estado == 2) {
+                      echo "done_outline";
+                    } else if($estado == 1) {
+                      echo "av_timer";
+                    };
+                  
+                    echo "</span></div>
+                    <h3 style='margin-bottom: 0; margin-top: 15px;' class='card-title'>
+                      <strong>Mesa No."; echo $fila['numeroMesa']; echo "</strong>
+                    </h3>
+                    <span class='spacer'></span>
+                    <h3 style='margin-bottom: 0; margin-top: 15px;' class='card-title orden'>
+                      <strong>#"; echo $fila['numeroOrden']; echo "</strong>
+                    </h3>
+                  </div>
+                  <hr>";
+                  $ordenId = $fila['ordId'];
+                  $consu = 
+                  "select consu.nombre as nombreComida, conord.cantidad, conord.comentario, conord.cantidad FROM consumoporordenes conord 
+                  INNER JOIN consumibles consu on conord.idConsumible = consu.id WHERE conord.idOrden = $ordenId";
+                  $consumoPorOrden=mysqli_query($conexion,$consu) or die(mysqli_error($conexion));
+                  while ($consumo=mysqli_fetch_array($consumoPorOrden)){
+                    echo "<label> <strong>"; echo $consumo['nombreComida']; echo "</strong></label> <hr>";
+                  }
+                  echo "
+                </div>
+              </div>
+            </div>
+            ";
+          }
+        ?>
+
+      </div>
+    </div>
+
 
     
 </body>

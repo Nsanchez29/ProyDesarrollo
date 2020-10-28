@@ -98,15 +98,6 @@
           WHERE ord.idUsuario = $id and ord.estado BETWEEN 1 AND 2";
           $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
           while ($fila=mysqli_fetch_array($datos)){
-            // echo 
-            // "<div  class='col-md-4'>
-            //   <div style='box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);' class='card mb-4'>
-            //     <div class='card-body'>
-            //       <h3 class='card-title'><strong>Mesa No.</strong>";echo $fila['numeroMesa']; echo "</h3>
-            //     </div>
-            //   </div>
-            // </div>";
-
             echo
             "
             <div  class='col-md-4'>
@@ -151,55 +142,6 @@
             ";
           }
         ?>
-
-            <!-- <div  class='col-md-4'>
-              <div  class='card mb-4 sombra'>
-                <div class='card-body'>
-                  <div class="item">
-                    <div class="box-waiting sombra"  ><span class="material-icons">av_timer</span></div>
-                    <h3 style="margin-bottom: 0; margin-top: 15px;" class='card-title'>
-                      <strong>Mesa No.1</strong>
-                    </h3>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <h1 class="orden">#53</h1>
-                  </div>
-                  <hr>
-                  <div class="col-md-12 item">
-                    <span><strong>Total:</strong></span>
-                    <span class="spacer"></span>
-                    <span>Q100</span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-            <!-- <div  class='col-md-4'>
-              <div  class='card mb-4 sombra'>
-                <div class='card-body'>
-                  <div class="item">
-                    <div class="box-accept sombra"  ><span class="material-icons">done_outline</span></div>
-                    <h3 style="margin-bottom: 0; margin-top: 15px;" class='card-title'>
-                      <strong>Mesa No.9</strong>
-                    </h3>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <h1 class="orden">#1</h1>
-                  </div>
-                  <hr>
-                  <div class="col-md-12 item">
-                    <span><strong>Total:</strong></span>
-                    <span class="spacer"></span>
-                    <span>Q100</span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-
-        
 
       </div>
     </div>

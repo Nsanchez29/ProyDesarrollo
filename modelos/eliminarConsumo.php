@@ -14,25 +14,27 @@ if(isset($_POST['guardar']))
 
  		$exito="'<script> 
  		alert('Eliminado con exito');
- 		location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
+		 location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
+		 
+		$getSubTotal = "SELECT subTotal FROM consumoporordenes where id = $idcons";
+		$conectGetSubTotal = mysqli_query($conexion,$getSubTotal) or die(mysqli_error($conexion));
+		$resultSubtotal=mysqli_fetch_array($conectGetSubTotal);
+		$subtotal = $resultSubtotal['subTotal'];
 
+		$getTotal = "SELECT total FROM ordenes where id = $idOr";
+		$conectGetTotal = mysqli_query($conexion,$getTotal) or die(mysqli_error($conexion));
+		$resultTotal=mysqli_fetch_array($conectGetTotal);
+		$total = $resultTotal['total'];
+
+		$newTotal = $total - $subtotal;
+		
 		$delete = "DELETE FROM consumoporordenes where id = $idcons";
-			if(mysqli_query($conexion, $delete)){
-
-				$cons = "SELECT SUM(subTotal) as Tot FROM consumoporordenes WHERE idOrden = $idOr";
-    				$total = mysqli_query($conexion,$cons) or die(mysqli_error($conexion));
-    				$result=mysqli_fetch_array($total);
-    				$totf = $result['Tot'];
-
-    				$orupd = "UPDATE ordenes set total = $totf";
-    				mysqli_query($conexion, $orupd);
-
-	  					echo $exito;
-
-
+		if(mysqli_query($conexion, $delete)){
+    	 			$orupd = "UPDATE ordenes set total = $newTotal";
+    	 			mysqli_query($conexion, $orupd);
+	  	 			echo $exito;
 		}else{
 			echo $error;
-
 		}
 		
 }
