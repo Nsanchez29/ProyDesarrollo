@@ -128,17 +128,26 @@
                       <strong>#"; echo $fila['numeroOrden']; echo "</strong>
                     </h3>
                   </div>
-                  <hr>";
+                  <hr>
+                  <div class='col-md-12'>";
                   $ordenId = $fila['ordId'];
                   $consu = 
-                  "select consu.nombre as nombreComida, conord.cantidad, conord.comentario, conord.cantidad FROM consumoporordenes conord 
+                  "select consu.nombre as nombreComida, conord.estado as estado, conord.comentario as comentario, conord.cantidad as cantidad FROM consumoporordenes conord 
                   INNER JOIN consumibles consu on conord.idConsumible = consu.id WHERE conord.idOrden = $ordenId";
                   $consumoPorOrden=mysqli_query($conexion,$consu) or die(mysqli_error($conexion));
                   while ($consumo=mysqli_fetch_array($consumoPorOrden)){
-                    echo "<label> <strong>"; echo $consumo['nombreComida']; echo "</strong></label> <hr>";
+                    echo "<div><span><strong>"; echo $consumo['nombreComida']; echo ": </strong>";echo $consumo['comentario']; echo ".</span></div>";
+                    echo "<div class='item'> <span style='margin: auto;'><strong>Cantidad: "; echo $consumo['cantidad'];;echo "</strong></span> <span class='spacer'></span>";
+                    if($consumo['estado'] == 0) {
+                      echo "<button type='button' class='btn btn-primary'>Entregar</button>";
+                    } else {
+                      echo "<div style='margin: 0;' class='alert alert-success text-center' role='alert'>Servido</div>";
+                    }
+                   echo "</div><hr>";
                   }
                   echo "
-                </div>
+                  </div>
+                  </div>
               </div>
             </div>
             ";
