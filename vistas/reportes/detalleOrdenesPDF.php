@@ -93,8 +93,8 @@
                     <th class="text-left" scope="col">Tipo de Platillo</th>
                     <th class="text-left" scope="col">Nombre del Platillo</th>
                     <th class="text-left" scope="col">Precio</th>
-                    <th class="text-left" scope="col">Cantidad</th>
-                    <th class="text-left" scope="col">Sub Total</th>
+                    <th class="text-center" scope="col">Cantidad</th>
+                    <th class="text-right" scope="col">Sub Total</th>
                   </tr>
                 </thead>
                 <tbody> 
@@ -106,8 +106,8 @@
                       <td class="text-left" scope="col"><?=$fila['tipoComida']?></td>
                       <td class="text-left" scope="col"><?=$fila['nombreComida']?></td>
                       <td class="text-left" scope="col">Q. <?=$fila['precioComida']?></td>
-                      <td class="text-left" scope="col"><?=$fila['cantPlatos']?></td>
-                      <td class="text-left" scope="col">Q. <?=$fila['subTotal']?></td>
+                      <td class="text-center" scope="col"><?=$fila['cantPlatos']?></td>
+                      <td class="text-right" scope="col">Q. <?=$fila['subTotal']?></td>
                     </tr> 
                     <?php 
                         }
@@ -117,7 +117,7 @@
                       <td class="text-left" scope="col"></td>
                       <td class="text-left" scope="col"></td>
                       <td class="text-left" scope="col"></td>
-                      <td class="text-left font-weight-bold" scope="col">Q. <?=$dto['total']?></td>
+                      <td class="text-right font-weight-bold" scope="col">Q. <?=$dto['total']?></td>
                     </tr>
                 </tbody>
               </table>
