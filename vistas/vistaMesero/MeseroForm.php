@@ -20,20 +20,24 @@
     $fila=mysqli_fetch_array($datos);
 
     
-    $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd
+    $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd, consord.estado as estado
                    from consumoporordenes consord
                    INNER JOIN consumibles as consu on consord.idConsumible = consu.id
                    where consord.idOrden = $idord";
     $data=mysqli_query($conexion,$resultado) or die(mysqli_error($conexion));
-    
+    $row=mysqli_fetch_array($data);
+
     $tiposConsumible = "select * from tipocomidas";
     $response=mysqli_query($conexion,$tiposConsumible) or die(mysqli_error($conexion));
       
     $numord = "select * from consumoporordenes where idOrden = $idord";
     $num= mysqli_query($conexion,$numord) or die(mysqli_error($conexion));
     $lineas=mysqli_num_rows($num);
-            
-   
+      
+
+
+    
+
 ?>
 
 <!DOCTYPE html>
@@ -130,6 +134,7 @@
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
               <th scope="col">Cantidad</th>
+              <th class="text-center" scope="col">Estado</th>
               <th  class="text-center" scope="col">Opciones</th>
               <th class="text-right" scope="col">Subtotal</th>
             </tr>
@@ -138,12 +143,23 @@
           <?php
               $i=0;
              while ($row=mysqli_fetch_array($data)){
+              $id = $row['estado'];
               $i++;
               echo"
             <tr>
               <th scope='row'>"; echo $i; echo "</th>
               <td>"; echo $row['nombre']; echo "</td>
               <td>"; echo $row['cant']; echo "</td>
+              <td>";if ($id == 0) {
+                    echo "<div class='alert alert-warning text-center' role='alert'>
+                           Pendiente
+                            </div>";
+              }else{
+                echo "<div class='alert alert-success text-center' role='alert'>
+                           Servido
+                            </div>";
+              };
+                echo"</td>
               <td class='text-center'>
                 <button onclick='editarCantidad("; echo $row['idConsOrd']; echo ", "; echo $row['cant']; echo ")' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
                 <button onclick='eliminarRegistro("; echo $row['idConsOrd']; echo ")' data-toggle='modal' data-target='#exampleModal4' data-toggle='tooltip' data-placement='top' title='Eliminar' type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
@@ -217,6 +233,11 @@
                 <div class="form-group col-md-12" id="select2lista"></div>
                 <div class="form-group col-md-12" id="cantidadConsumo"></div>
                 
+                <div class="form-group col-md-12" >
+                <label><strong>Descripción:</strong></label>
+                <input id="desc" name="desc" type="text" class="form-control">
+              </div>
+
               </div>
             </div>
             <div class="modal-footer">
