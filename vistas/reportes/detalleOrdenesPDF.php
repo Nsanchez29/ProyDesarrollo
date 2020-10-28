@@ -1,18 +1,4 @@
-<?php
 
-    /*session_start();
-
-    if(!isset($_SESSION['idRol'])){
-        header('location: ../vistas/login.php');
-    }else{
-        if($_SESSION['idRol'] != 1){
-            header('location: ../vistas/login.php');
-        }
-    }*/
-
-    //include '../../config/conexion.php';
-
-?>
 <?php ob_start(); ?>
 
 <!DOCTYPE html>
@@ -53,7 +39,7 @@
               {   
                     $fecha = $_GET['fechaOrden'];
                     $orden = $_GET['numOrden'];
-                    $consulta = "SELECT ord.numero as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas as mesa on mesa.id = ord.idMesa INNER JOIN usuarios as user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas as tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha like '%$fecha%' AND ord.numero LIKE '%$orden%'";
+                    $consulta = "SELECT ord.numero as numOrden, ord.fecha as fecha, mesa.numero as numMesa, mesa.cantidadMaxSillas as canSillas, user.nombre as usuario, tipCom.nombre as tipoComida, cons.nombre as nombreComida, cons.precio as precioComida, detOrd.cantidad as cantPlatos, detOrd.subTotal as subTotal, ord.total as total FROM consumoporordenes detOrd INNER JOIN ordenes ord on ord.id = detOrd.idOrden INNER JOIN mesas mesa on mesa.id = ord.idMesa INNER JOIN usuarios user on user.id = ord.idUsuario INNER JOIN consumibles cons on cons.id = detOrd.idConsumible INNER JOIN tipocomidas tipCom on tipCom.id = cons.idTipoComida WHERE ord.fecha LIKE '%$fecha%' AND ord.numero LIKE '%$orden%'";
                     $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
                     $dto=mysqli_fetch_array($datos);
               ?>
@@ -64,20 +50,20 @@
                 <br>
                 <div class="">
                   <div class="">
-                    <h4 class="text-center font-weight-bold">Número de Orden: <?=$dto['numOrden']?></h4>
-                    <h4 class="text-center font-weight-bold">Fecha: <?=$dto['fecha']?></h4>
+                    <h4 class="text-center">Número de Orden: <?=$dto['numOrden']?></h4>
+                    <h4 class="text-center">Fecha: <?=$dto['fecha']?></h4>
                   </div>
                 <br>
                 </div>
                 <div class="float-left">
                   <div class="form-inline form-group mx-sm-3 mb-2">
-                    <h5 class="font-weight-bold">Número de Mesa: <?=$dto['numMesa']?></h5>
+                    <h5>Número de Mesa: <?=$dto['numMesa']?></h5>
                   </div>
                   <div class="form-inline form-group mx-sm-3 mb-2">
-                    <h5 class="font-weight-bold">Cantidad de Sillas: <?=$dto['canSillas']?></h5>
+                    <h5>Cantidad de Sillas: <?=$dto['canSillas']?></h5>
                   </div>
                   <div class="form-inline form-group mx-sm-3 mb-3">
-                    <h5 class="font-weight-bold">Usuario: <?=$dto['usuario']?></h5> 
+                    <h5>Usuario: <?=$dto['usuario']?></h5> 
                   </div>
                 </div>
               </div>

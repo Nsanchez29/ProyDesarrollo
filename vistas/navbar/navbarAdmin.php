@@ -9,7 +9,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="../reportes/buscarOrden.php">Detalle por Orden.</a>
-                <a class="dropdown-item" href="#">Ordenes por Mesero.</a>
+                <a class="dropdown-item" href="../reportes/buscarMesero.php">Ordenes por Mesero.</a>
               </div>
             </li>
         </ul>
