@@ -4,18 +4,18 @@
 
 
 	$id = $_REQUEST['id'];
-	$estado = 0;
+	$estado = 1;
 
 
 	$elimesa= " UPDATE mesas SET estado = $estado where id = $id";
 	$res = mysqli_query($conexion, $elimesa);
 
 	if ($res) {
-					echo '<script> alert("mesa desactivada");
+					echo '<script> alert("mesa activada");
 					location.href = "../vistas/vistaAdmin/mesas.php"; 
 					</script>';
 				}else{
-					echo '<script> alert("error al desactivar la mesa");
+					echo '<script> alert("error al activar la mesa");
 					location.href = "../vistas/vistaAdmin/mesas.php"; 
 					</script>';
 				}

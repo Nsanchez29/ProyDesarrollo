@@ -62,15 +62,16 @@
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">#</th>
+                  <th scope="col">Nombre Usuario</th>
                   <th scope="col">Usuario</th>
-                  <th scope="col">Contraseña</th>
+                  <th scope="col">Estado</th>
                   <th scope="col">Editar</th>
-                  <th scope="col">Desactivar</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
                 <tbody>
                   <?php
-                    $usuarios = "SELECT * from usuarios where estado = 1";
+                    $usuarios = "SELECT * from usuarios";
                     $Adminusu = mysqli_query($conexion, $usuarios);
 
                     foreach ($Adminusu as $colUsuario) {
@@ -79,9 +80,29 @@
                   <tr>
                     <td><?php echo $colUsuario['id']; ?></td>
                     <td><?php echo $colUsuario['nombre']; ?></td>
-                    <td><?php echo $colUsuario['password']; ?></td>
+                    <td><?php echo $colUsuario['username']; ?></td>
+                   <?php
+                      if ($colUsuario['estado']==0) {
+                       echo "<td>"; echo "Desactivado"; echo "</td>";
+                      }else if ($colUsuario['estado'] ==1) {
+                          echo "<td>"; echo "Activado"; echo "</td>";
+                      }
+                    ?>
                     <td><button class="btn btn-warning Editarusuario" data-toggle='modal' data-target='#Editarusuario'><span class="material-icons">create</span></button> </td>
-                    <td><a href="../../modelos/eliminarusuario.php?id=<?php echo $colUsuario['id']; ?>" class="btn btn-danger"><span class="material-icons">delete</span></a></td>
+                    <?php
+
+                      if ($colUsuario['estado']==0) {
+                        ?>
+                       <td><a href="../../modelos/activarusuario.php?id=<?php echo $colUsuario['id']; ?>" class="btn btn-success btn-block">Activar</a></td>
+                       <?php
+                      }else if ($colUsuario['estado'] ==1 ) {
+                        ?>
+                          <td><a href="../../modelos/eliminarusuario.php?id=<?php echo $colUsuario['id']; ?>" class="btn btn-danger btn-block">Desactivar</a></td>
+                          <?php
+                      }
+
+                    ?>
+                    
                   </tr>
                   <?php
                     }
@@ -106,6 +127,11 @@
       <form action="../../modelos/nuevousuario.php" method="POST">
       <div class="modal-body">
         
+        <div class="form-group">
+          <label>Nombre Usuario</label>
+          <input type="text" class="form-control" name="name" placeholder="Ingrese Nombre de Usuario.">
+        </div>
+
         <div class="form-group">
           <label>Usuario</label>
           <input type="text" class="form-control" name="usuario" placeholder="Ingrese Usuario.">
@@ -159,6 +185,11 @@
         <input type="hidden" name="idUsuario" id="update_id">
         
         <div class="form-group">
+          <label>Nombre Usuario</label>
+          <input type="text" class="form-control" name="nameUpdate" id="UpdateName" placeholder="Ingrese Nombre de Usuario.">
+        </div>
+
+        <div class="form-group">
           <label>Usuario</label>
           <input type="text" class="form-control" name="usuarioUpdate" id="UpdateUser" placeholder="Ingrese Usuario.">
         </div>
@@ -207,8 +238,9 @@
   });
 
   $('#update_id').val(datos[0]);
-  $('#UpdateUser').val(datos[1]);
-  //$('#UpdatePass').val(datos[2]);
+  $('#updateName').val(datos[1]);
+  $('#UpdateUser').val(datos[2]);
+  //$('#UpdatePass').val(datos[3]);
 
  });
 

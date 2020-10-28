@@ -249,6 +249,11 @@
                 <input readonly name="totalModal" id="totalModal" value="<?php echo  $fila['totalOrden'];?>" type="text" class="form-control">
               </div>
 
+                 <div class="form-group col-md-12">
+                <label><strong>Nombre y apellido:</strong></label>
+                <input id="nombre" name="nombre" type="text" class="form-control">
+              </div>
+
               <div class="form-group col-md-12">
                 <label><strong>NIT:</strong></label>
                 <input id="nit" name="nit" type="text" class="form-control">

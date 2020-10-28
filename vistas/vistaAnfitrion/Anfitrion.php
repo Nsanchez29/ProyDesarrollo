@@ -91,7 +91,8 @@
           include '../../config/conexion.php';
           $id = $_SESSION["idMesero"];
           $consulta =
-          "SELECT * FROM mesas where estado != 0";
+          "SELECT * from mesas 
+          where estado !=0";
           $datos=mysqli_query($conexion,$consulta) or die(mysqli_error($conexion));
           while ($fila=mysqli_fetch_array($datos)){
             
@@ -128,6 +129,7 @@
                   <div class='text-center'>
                     <h1 class='orden'>";echo $fila['cantidadMaxSillas']; echo "</h1><h3> Personas</h3>
                   </div>
+                  
                   <div class='card-footer'>";
                   $boton = $fila['estado'];
                   if ($boton==2) {
@@ -137,8 +139,31 @@
                     $IdMesa = $fila['id'];
                     echo "<button id='btnModal' type='button' data-numero='$mesa' data-mesa='$IdMesa' class='btn btn-primary btn-lg btn-block ModalMesero' data-toggle='modal' data-target='#ModalMesero'>Asignar Mesero</button>";
                   };
-                  echo "</div>
-                </div>
+                  echo "</div>";
+                  
+                  $EMesa = $fila['estado'];
+                  $id = $fila['id'];
+                  if ($EMesa ==2) {
+                    
+                    $cons = "SELECT u.nombre as usuario, m.numero as numero from mesas m INNER JOIN ordenes o on o.idMesa = m.id INNER JOIN usuarios u on u.id = o.idUsuario WHERE m.id = '$id' AND m.estado = 2";
+                    $dat=mysqli_query($conexion,$cons) or die(mysqli_error($conexion));
+
+                    foreach ($dat as $row) {
+                      
+                      echo "<hr>
+                            <div class='text-center'>
+                            <small>Mesero Asignado: </small>";
+                      echo "</h1><b>"; echo $row['usuario']; echo "</b></h1>
+                            </div>";
+                    }
+                  }else{
+                    echo "<hr>
+                            <div class='text-center'>
+                            <small>Mesero Asignado: </small>";
+                      echo "</h1><b>No Hay Mesero Asignado</b></h1>
+                            </div>";
+                  }
+                echo "</div>
               </div>
             </div>
             ";
