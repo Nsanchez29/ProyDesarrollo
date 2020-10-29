@@ -80,7 +80,7 @@
                 </div>
                 <div class="container text-center h-100 d-flex justify-content-center align-items-center">
                   <div class="form-inline form-group mx-sm-3 mb-2">
-                    <h4 class="text-center font-weight-bold">Fecha Desde:&nbsp&nbsp</h4><h4><?=$fechaDes?>&nbsp&nbsp|</h4><h4 class="text-center font-weight-bold">&nbsp&nbspFecha Hasta:&nbsp&nbsp</h4><h4><?=$fechaHas?></h4>
+                    <h4 class="text-center font-weight-bold">Fecha Desde:&nbsp&nbsp</h4><h4><?=date("d-m-Y", strtotime($fechaDes))?>&nbsp&nbsp|</h4><h4 class="text-center font-weight-bold">&nbsp&nbspFecha Hasta:&nbsp&nbsp</h4><h4><?=date("d-m-Y", strtotime($fechaHas))?></h4>
                   </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@
                     <tr>
                       <td class="text-left" scope="col"><?=$fila['numOrden']?></td>
                       <td class="text-left" scope="col"><?=$fila['numMesa']?></td>
-                      <td class="text-left" scope="col"><?=$fila['fecha']?></td>
+                      <td class="text-left" scope="col"><?=date("d-m-Y H:i:s", strtotime($fila['fecha']))?></td>
                       <td class="text-right" scope="col">Q. <?=$fila['total']?></td>
                     </tr> 
                     <?php 
@@ -114,7 +114,7 @@
               <div class="form-inline float-right">
                 <br>
                 <div class="form-group mx-sm-1 mb-2">
-                  <a href="buscarMesero.php" class="btn btn-primary ">Nueva Busqueda
+                  <a href="buscarMesero.php" class="btn btn-primary ">Nueva Búsqueda
                     <i class="fas fa-file-pdf"></i>
                   </a>
                 </div>
@@ -127,7 +127,7 @@
               </div>
           <?php
             }else{
-              echo '<script> alert("No se encontraron datos relacionados con la Busqueda");
+              echo '<script> alert("No se encontraron datos relacionados con la Búsqueda");
                     location.href = "buscarMesero.php"; 
                     </script>';
             }
