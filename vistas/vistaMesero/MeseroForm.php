@@ -20,7 +20,7 @@
     $fila=mysqli_fetch_array($datos);
 
     
-      $resultado= "select  consu.nombre as nombre, consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd, consord.estado as estado
+      $resultado= "select  consu.nombre as nombre,consord.comentario as comentario,consord.cantidad as cant, consord.subtotal as sub, consord.id as idConsOrd, consord.estado as estado
                     from consumoporordenes consord
                     INNER JOIN consumibles as consu on consord.idConsumible = consu.id
                     where consord.idOrden = $idord";
@@ -132,6 +132,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
+              <th  style="width: 350px; " class="text-center " scope="col">Descripción</th>
               <th scope="col">Cantidad</th>
               <th class="text-center" scope="col">Estado</th>
               <th  class="text-center" scope="col">Opciones</th>
@@ -148,7 +149,9 @@
             <tr>
               <th scope='row'>"; echo $i; echo "</th>
               <td>"; echo $row['nombre']; echo "</td>
-              <td>"; echo $row['cant']; echo "</td>
+               <td >"; echo $row['comentario']; echo "</td>
+
+              <td class = 'text-center'>"; echo $row['cant']; echo "</td>
               <td>";if ($estadoConsumo == 0) {
                     echo "<div class='alert alert-warning text-center' role='alert'>
                            Pendiente
@@ -158,12 +161,23 @@
                            Servido
                             </div>";
               };
+              $idOrden = $row['idConsOrd'];
+              $idCantidaad = $row['cant'];
+              $idComentario = $row['comentario'];
+              $comentarioModificado = '"';
+              $comentarioModificado = $comentarioModificado . $idComentario . '"';
                 echo"</td>
               <td class='text-center'>
-                <button onclick='editarCantidad("; echo $row['idConsOrd']; echo ", "; echo $row['cant']; echo ")' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'><span class='material-icons'>create</span></button>
-                <button onclick='eliminarRegistro("; echo $row['idConsOrd']; echo ")' data-toggle='modal' data-target='#exampleModal4' data-toggle='tooltip' data-placement='top' title='Eliminar' type='button' class='btn btn-danger btn-sm'><span class='material-icons'>delete</span></button>
+                <button onclick='editarCantidad("; echo $idOrden ; echo ", "; echo $idCantidaad;  echo ", "; echo $comentarioModificado; echo " )' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'"; if ($estadoConsumo == 1) {
+                                                    echo "disabled";      
+                                                    } echo
+                "><span class='material-icons'>create</span></button>
+                <button onclick='eliminarRegistro("; echo $row['idConsOrd']; echo ")' data-toggle='modal' data-target='#exampleModal4' data-toggle='tooltip' data-placement='top' title='Eliminar' type='button' class='btn btn-danger btn-sm'"; if ($estadoConsumo == 1) {
+                                                                echo "disabled";      
+                                                                } echo
+                "><span class='material-icons'>delete</span></button>
               </td>
-              <td class='text-right'>"; echo $row['sub']; echo "</td>
+              <td class='text-right'>Q."; echo $row['sub']; echo "</td>
             </tr>
 
             ";
@@ -230,12 +244,9 @@
                 </div>
 
                 <div class="form-group col-md-12" id="select2lista"></div>
-                <div class="form-group col-md-12" id="cantidadConsumo"></div>
+                <div id="cantidadConsumo"></div>
                 
-                <div class="form-group col-md-12" >
-                <label><strong>Descripción:</strong></label>
-                <input id="desc" name="desc" type="text" class="form-control">
-              </div>
+                
 
               </div>
             </div>
@@ -307,7 +318,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar Cantidad</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Editar articulo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -319,6 +330,11 @@
                 <div class="form-group col-md-12">
                     <label><strong>Cantidad:</strong></label>
                     <input name="cantidadEditar" id="cantidadEditar" type="number" class="form-control">
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label><strong>Descripción:</strong></label>
+                    <textarea  name="newdesc" id="newdesc" type="text" class="form-control"></textarea>
                 </div>
               </div>
             </div>
@@ -398,9 +414,10 @@
 </script>
 <script type="text/javascript">
 
-  function editarCantidad(id, cantidad){
+  function editarCantidad(id, cantidad, comentario){
     $('#cantidadEditar').val(cantidad);
     $('#idEditar').val(id);
+    $('#newdesc').val(comentario);
   };
 
   function eliminarRegistro(id){

@@ -8,14 +8,15 @@ if(isset($_POST['guardar']))
 		$idOr = $_POST['idOrden'];
 	    $idconsu = $_POST['idEditar'];
 	    $cantedit = $_POST['cantidadEditar'];
-	 
+	 	$desnew = $_POST['newdesc']; 
+	    
 	   
 	  		$error="'<script> 
  			alert('Error al modificar la orden');
  			location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
 
  			$exito="'<script> 
- 			alert('Cantidad modificada con exito');
+ 			alert('Consumo modificada con exito');
  			location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idOr."';</script>'";
 	  
 	  	           $valor = "select   consu.precio as precio
@@ -33,7 +34,7 @@ if(isset($_POST['guardar']))
 
     				$subord = $cantedit * $precio;
 
-    				$edit = "UPDATE consumoporordenes set cantidad = $cantedit, subTotal = $subord where id = $idconsu";
+    				$edit = "UPDATE consumoporordenes  set comentario = '$desnew', cantidad = $cantedit, subTotal = $subord where id = $idconsu";
 	  				if(mysqli_query($conexion, $edit)){
 
 	  				$cons = "SELECT SUM(subTotal) as Tot FROM consumoporordenes WHERE idOrden = $idOr";
@@ -50,21 +51,8 @@ if(isset($_POST['guardar']))
 	  				}
     			
 
-
-		
-
-
-
-
 }
 mysqli_close($conexion);
-
-
-
-
-
-
-
 
 
  ?>

@@ -6,7 +6,10 @@ if(isset($_POST['save']))
 	 $idorden = $_POST['idOrden'];
 	 $cons = $_POST['lista2'];
 	 $cantidad = $_POST['cantidad'];
+     $descripcion = $_POST['desc'];
 
+    
+    
 	    $consu = "select precio from consumibles where id = $cons";
     	$precio = mysqli_query($conexion,$consu) or die(mysqli_error($conexion));
         $fila=mysqli_fetch_array($precio);
@@ -28,8 +31,8 @@ if(isset($_POST['save']))
  		location.href = '../vistas/vistaMesero/Meseroform.php?idOrd=".$idorden."';</script>'";
  		
  		if ($estado == 1) {
-		$sql = "INSERT INTO consumoporordenes (idOrden,idConsumible,cantidad,subTotal)
-	 	VALUES ('$idorden','$cons','$cantidad','$multi')";
+		$sql = "INSERT INTO consumoporordenes (idOrden,idConsumible,cantidad,comentario,subTotal)
+	 	VALUES ('$idorden','$cons','$cantidad','$descripcion','$multi')";
 	 	if (mysqli_query($conexion, $sql)) {
 	 			$cons = "SELECT SUM(subTotal) as Tot FROM consumoporordenes WHERE idOrden = $idorden";
     			$total = mysqli_query($conexion,$cons) or die(mysqli_error($conexion));
@@ -45,8 +48,8 @@ if(isset($_POST['save']))
 				}
 			}else{
 
-				$sql = "INSERT INTO consumoporordenes (idOrden,idConsumible,cantidad,subTotal)
-	 			VALUES ('$idorden','$cons','$cantidad','$multi')";
+				$sql = "INSERT INTO consumoporordenes (idOrden,idConsumible,cantidad,comentario,subTotal)
+	 			VALUES ('$idorden','$cons','$cantidad','$descripcion','$multi')";
 	 			if (mysqli_query($conexion, $sql)) {
 	 			$cons = "SELECT SUM(subTotal) as Tot FROM consumoporordenes WHERE idOrden = $idorden";
     			$total = mysqli_query($conexion,$cons) or die(mysqli_error($conexion));
