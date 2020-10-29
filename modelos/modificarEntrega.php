@@ -1,24 +1,25 @@
 <?php 
 require_once "../config/conexion.php";
 
-if(isset($_POST['enviar']))
+
+if(isset($_REQUEST['idconsu']))
 {	 
 
-	  $idconsumo = $_POST['idconsu'];
-	 	echo $idconsumo;
-/*
+	$idconsumo = $_REQUEST['idconsu'];
+		
+		
+	
 	  	$exito="'<script> 
  		alert('Platillo entregado');
- 		location.href = '../vistas/vistaMesero/Cocinero.php';</script>'";
+ 		location.href = '../vistas/vistacocinero/Cocinero.php';</script>'";
 
  		$error="'<script> 
  		alert('Error al entregar el platillo');
- 		location.href = '../vistas/vistaMesero/Cocinero.php';</script>'";
+ 		location.href = '../vistas/vistacocinero/Cocinero.php';</script>'";
 
-		 $consul = "INSERT INTO pagos (idOrden,nombre,nit,montoEfectivo,cambioEfectivo)
-	    			VALUES ('$idord','$nom','$nit','$efectivo','$cambio')";
+		 $consul = "UPDATE consumoporordenes set estado = 1 where id = $idconsumo";
 	 	 if (mysqli_query($conexion, $consul)) {
-
+	 	 		header('Location: ../vistas/vistacocinero/Cocinero.php');
 	 			echo $exito;
     							
 				}else{ 
@@ -27,7 +28,9 @@ if(isset($_POST['enviar']))
 				}
 
 
-*/
-}
+
+
 mysqli_close($conexion);
+
+}
 	 ?>

@@ -177,7 +177,7 @@
                                                                 } echo
                 "><span class='material-icons'>delete</span></button>
               </td>
-              <td class='text-right'>"; echo $row['sub']; echo "</td>
+              <td class='text-right'>Q."; echo $row['sub']; echo "</td>
             </tr>
 
             ";
@@ -318,7 +318,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar Cantidad</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Editar articulo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

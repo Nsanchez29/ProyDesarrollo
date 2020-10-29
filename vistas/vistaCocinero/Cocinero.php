@@ -138,7 +138,7 @@
                     echo "<div> <span><strong>"; echo $consumo['nombreComida']; echo ": </strong>";echo $consumo['comentario']; echo ".</span></div>";
                     echo "<div class='item'> <span style='margin: auto;'><strong>Cantidad: "; echo $consumo['cantidad'];;echo "</strong></span> <span class='spacer'></span>";
                     if($consumo['estado'] == 0) {
-                      echo "<a  type='button'  name = 'enviar' class='btn btn-primary'>Entregar</a>";
+                      echo "<a  type='button'href='../../modelos/modificarEntrega.php?idconsu="; echo $consumo['idcons']; echo"'  class='btn btn-primary'>Entregar</a>";
                     } else {
                       echo "<div style='margin: 0;' class='alert alert-success text-center' role='alert'>Servido</div>";
                     }
