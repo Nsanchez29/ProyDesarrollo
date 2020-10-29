@@ -26,10 +26,9 @@
     />
     <!-- JS, Popper.js, and jQuery -->
     <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
       integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -136,10 +135,10 @@
                   INNER JOIN consumibles consu on conord.idConsumible = consu.id WHERE conord.idOrden = $ordenId";
                   $consumoPorOrden=mysqli_query($conexion,$consu) or die(mysqli_error($conexion));
                   while ($consumo=mysqli_fetch_array($consumoPorOrden)){
-                    echo "<div><input type='hidden' name='idconsu' value="; echo $consumo['idcons']; echo"><span><strong>"; echo $consumo['nombreComida']; echo ": </strong>";echo $consumo['comentario']; echo ".</span></div>";
+                    echo "<div> <span><strong>"; echo $consumo['nombreComida']; echo ": </strong>";echo $consumo['comentario']; echo ".</span></div>";
                     echo "<div class='item'> <span style='margin: auto;'><strong>Cantidad: "; echo $consumo['cantidad'];;echo "</strong></span> <span class='spacer'></span>";
                     if($consumo['estado'] == 0) {
-                      echo "<button type='submit' name = 'enviar' class='btn btn-primary'>Entregar</button>";
+                      echo "<a  type='button'  name = 'enviar' class='btn btn-primary'>Entregar</a>";
                     } else {
                       echo "<div style='margin: 0;' class='alert alert-success text-center' role='alert'>Servido</div>";
                     }
@@ -161,3 +160,4 @@
     
 </body>
 </html>
+

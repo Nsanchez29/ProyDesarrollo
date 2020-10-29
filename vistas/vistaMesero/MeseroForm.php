@@ -145,7 +145,6 @@
              while ($row=mysqli_fetch_array($data)){
               $i++;
               $estadoConsumo = $row['estado'];
-              $comen
               echo"
             <tr>
               <th scope='row'>"; echo $i; echo "</th>
@@ -162,9 +161,14 @@
                            Servido
                             </div>";
               };
+              $idOrden = $row['idConsOrd'];
+              $idCantidaad = $row['cant'];
+              $idComentario = $row['comentario'];
+              $comentarioModificado = '"';
+              $comentarioModificado = $comentarioModificado . $idComentario . '"';
                 echo"</td>
               <td class='text-center'>
-                <button onclick='editarCantidad("; echo $row['idConsOrd']; echo ", "; echo $row['cant']; echo ")' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'"; if ($estadoConsumo == 1) {
+                <button onclick='editarCantidad("; echo $idOrden ; echo ", "; echo $idCantidaad;  echo ", "; echo $comentarioModificado; echo " )' data-toggle='modal' data-target='#exampleModal3' data-toggle='tooltip' data-placement='top' title='Editar Cantidad' type='button' style='color:white;'' class='btn btn-warning  btn-sm'"; if ($estadoConsumo == 1) {
                                                     echo "disabled";      
                                                     } echo
                 "><span class='material-icons'>create</span></button>
@@ -240,12 +244,9 @@
                 </div>
 
                 <div class="form-group col-md-12" id="select2lista"></div>
-                <div class="form-group col-md-12" id="cantidadConsumo"></div>
+                <div id="cantidadConsumo"></div>
                 
-                <div class="form-group col-md-12" >
-                <label><strong>Descripción:</strong></label>
-                <input id="desc" name="desc" type="text" class="form-control">
-              </div>
+                
 
               </div>
             </div>
@@ -333,7 +334,7 @@
 
                 <div class="form-group col-md-12">
                     <label><strong>Descripción:</strong></label>
-                    <input name="newdesc" id="newdesc" type="text" class="form-control" value="">
+                    <textarea  name="newdesc" id="newdesc" type="text" class="form-control"></textarea>
                 </div>
               </div>
             </div>
@@ -413,9 +414,10 @@
 </script>
 <script type="text/javascript">
 
-  function editarCantidad(id, cantidad){
+  function editarCantidad(id, cantidad, comentario){
     $('#cantidadEditar').val(cantidad);
     $('#idEditar').val(id);
+    $('#newdesc').val(comentario);
   };
 
   function eliminarRegistro(id){
