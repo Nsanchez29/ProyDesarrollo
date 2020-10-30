@@ -42,7 +42,7 @@ if(isset($_POST['guardar']))
     				$result=mysqli_fetch_array($total);
     				$totf = $result['Tot'];
 
-    				$orupd = "UPDATE ordenes set total = $totf";
+    				$orupd = "UPDATE ordenes set total = $totf where id = $idOr ";
     				mysqli_query($conexion, $orupd);
 
 	  					echo $exito;

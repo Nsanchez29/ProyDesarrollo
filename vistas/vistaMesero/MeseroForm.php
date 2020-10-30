@@ -133,7 +133,7 @@
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
               <th  style="width: 350px; " class="text-center " scope="col">Descripción</th>
-              <th scope="col">Cantidad</th>
+              <th class="text-center" scope="col">Cantidad</th>
               <th class="text-center" scope="col">Estado</th>
               <th  class="text-center" scope="col">Opciones</th>
               <th class="text-right" scope="col">Subtotal</th>
