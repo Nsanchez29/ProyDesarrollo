@@ -56,7 +56,7 @@
                 </div>
                 <div class="">
                   <div class="">
-                    <h4 class="text-center">Fecha Desde: <?=$fechaDes?>  |  Fecha Hasta: <?=$fechaHas?></h4>
+                    <h4 class="text-center">Fecha Desde: <?=date("d-m-Y", strtotime($fechaDes))?>  |  Fecha Hasta: <?=date("d-m-Y", strtotime($fechaHas))?></h4>
                   </div>
                 </div>
               </div>

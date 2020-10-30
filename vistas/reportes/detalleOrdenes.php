@@ -73,7 +73,7 @@
                 <br>
                 <div class="container text-center h-100 d-flex justify-content-center align-items-center">
                   <div class="form-inline form-group mx-sm-3 mb-2">
-                    <h4 class="text-center font-weight-bold">Número de Orden:&nbsp&nbsp</h4><h4><?=$dto['numOrden']?></h4><h2>&nbsp&nbsp|&nbsp&nbsp</h2><h4 class="text-center font-weight-bold">Fecha:&nbsp&nbsp</h4><h4><?=$dto['fecha']?></h4>
+                    <h4 class="text-center font-weight-bold">Número de Orden:&nbsp&nbsp</h4><h4><?=$dto['numOrden']?></h4><h2>&nbsp&nbsp|&nbsp&nbsp</h2><h4 class="text-center font-weight-bold">Fecha:&nbsp&nbsp</h4><h4><?=date("d-m-Y H:i:s", strtotime($dto['fecha']))?></h4>
                   </div>
                 <br>
                 </div>
@@ -128,7 +128,7 @@
               <div class="form-inline float-right">
                 <br>
                 <div class="form-group mx-sm-1 mb-2">
-                  <a href="buscarOrden.php" class="btn btn-primary ">Nueva Busqueda
+                  <a href="buscarOrden.php" class="btn btn-primary ">Nueva Búsqueda
                     <i class="fas fa-file-pdf"></i>
                   </a>
                 </div>
@@ -141,7 +141,7 @@
               </div>
           <?php
             }else{
-              echo '<script> alert("No se encontraron datos relacionados con la Busqueda");
+              echo '<script> alert("No se encontraron datos relacionados con la Búsqueda");
                     location.href = "buscarOrden.php"; 
                     </script>';
             }

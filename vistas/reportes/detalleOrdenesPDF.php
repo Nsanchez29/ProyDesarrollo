@@ -51,7 +51,7 @@
                 <div class="">
                   <div class="">
                     <h4 class="text-center">Número de Orden: <?=$dto['numOrden']?></h4>
-                    <h4 class="text-center">Fecha: <?=$dto['fecha']?></h4>
+                    <h4 class="text-center">Fecha: <?=date("d-m-Y H:i:s", strtotime($dto['fecha']))?></h4>
                   </div>
                 <br>
                 </div>
